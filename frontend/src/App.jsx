@@ -14,7 +14,7 @@ function App() {
         <div className="pointer-events-none absolute left-[-10rem] top-32 h-64 w-64 rounded-full bg-bubblegum/10 blur-3xl" />
         <div className="pointer-events-none absolute bottom-10 right-[-8rem] h-64 w-64 rounded-full bg-aurora/10 blur-3xl" />
         <Navbar />
-        <main className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-3 pb-12 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+        <main className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-10 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pt-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-room" element={<CreateRoom />} />
