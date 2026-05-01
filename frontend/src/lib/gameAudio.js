@@ -1,4 +1,4 @@
-let audioContext;
+git add .let audioContext;
 
 function getAudioContext() {
   if (typeof window === 'undefined') {

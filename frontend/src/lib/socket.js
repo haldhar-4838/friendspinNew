@@ -1,10 +1,12 @@
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
 const SOCKET_SERVER_URL =
-  import.meta.env.VITE_SOCKET_SERVER_URL || 'http://localhost:4000';
+  import.meta.env.VITE_SOCKET_SERVER_URL || 
+  "https://friendspin-backend.onrender.com";
 
 export const socket = io(SOCKET_SERVER_URL, {
-  autoConnect: false,
+  transports: ["websocket"],
+  autoConnect: true, // important
 });
 
 export { SOCKET_SERVER_URL };
