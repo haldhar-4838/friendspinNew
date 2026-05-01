@@ -21,7 +21,11 @@ function ShareButton({ roomCode }) {
   };
 
   return (
-    <Button variant="secondary" onClick={handleShare} className="w-full">
+    <Button
+      variant="secondary"
+      onClick={handleShare}
+      className="min-h-[3.6rem] w-full justify-center"
+    >
       Share Invite Link
     </Button>
   );

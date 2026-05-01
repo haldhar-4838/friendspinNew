@@ -102,23 +102,24 @@ function Lobby() {
   }
 
   return (
-    <div className="grid gap-6 py-6 lg:grid-cols-[1.15fr_0.85fr]">
+    <div className="grid gap-6 py-4 sm:py-6 lg:grid-cols-[1.08fr_0.92fr]">
       <Card
         title="Lobby"
         subtitle="Invite players, confirm everyone is here, then start the game."
       >
         <div className="space-y-5">
           <RoomCodeBox roomCode={room.code} />
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full border border-bubblegum/20 bg-bubblegum/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-bubblegum">
+
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+            <span className="status-pill border-bubblegum/20 bg-bubblegum/10 text-bubblegum">
               {modeLabel}
             </span>
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-slate-300">
+            <span className="status-pill border-white/10 bg-white/[0.04] text-slate-300">
               {players.length} players
             </span>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <ShareButton roomCode={room.code} />
             <WhatsAppShareButton roomCode={room.code} />
             {currentPlayerInRoom?.isHost ? (
@@ -126,7 +127,7 @@ function Lobby() {
                 variant="secondary"
                 onClick={handleStartGame}
                 disabled={players.length < 2}
-                className="w-full"
+                className="min-h-[3.6rem] w-full"
               >
                 Start Game
               </Button>
@@ -134,11 +135,11 @@ function Lobby() {
           </div>
 
           {statusMessage ? (
-            <p className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
+            <p className="rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-7 text-slate-200">
               {statusMessage}
             </p>
           ) : (
-            <p className="text-sm text-slate-400">
+            <p className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-7 text-slate-400">
               {currentPlayerInRoom?.isHost
                 ? players.length < 2
                   ? 'You need at least 2 players in the room before starting.'
@@ -154,10 +155,7 @@ function Lobby() {
           title="Players"
           subtitle={`${players.length} player${players.length === 1 ? '' : 's'} currently in the room.`}
         >
-          <PlayerList
-            players={players}
-            currentPlayerId={currentPlayer?.id}
-          />
+          <PlayerList players={players} currentPlayerId={currentPlayer?.id} />
         </Card>
         <Card
           title="Leaderboard"

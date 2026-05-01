@@ -62,6 +62,7 @@ function GameRoom() {
     const handleRoundReset = () => {
       setStatusMessage('New round ready. Spin again when everyone is set.');
     };
+
     const handleRoundScored = ({ player, action, points }) => {
       setStatusMessage(
         `${player.name} ${action === 'completed' ? 'completed the round' : 'skipped the round'} (${points > 0 ? `+${points}` : points} pts).`,
@@ -240,14 +241,14 @@ function GameRoom() {
         modeLabel={modeLabel}
       />
 
-      <div className="grid gap-6 py-6 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-6 py-4 sm:py-6 lg:grid-cols-[1.08fr_0.92fr]">
         <Card
           title="Truth or Dare"
           subtitle="Watch the bottle spin, see who it lands on, and let the chosen player pick their challenge."
         >
-          <div className="space-y-6">
-            {/* Phase 2 can layer in richer turn UI, timers, and scoring without replacing the synced room state. */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-bubblegum/10 via-slate-950/50 to-aurora/10 px-3 py-5 sm:px-6">
+          <div className="space-y-5 sm:space-y-6">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-bubblegum/10 via-slate-950/60 to-aurora/10 px-2 py-5 sm:px-6">
+              <div className="pointer-events-none absolute inset-x-10 top-6 h-24 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_70%)] blur-2xl" />
               <PlayerCircle
                 players={room.players}
                 selectedPlayerId={selectedPlayer?.id}
@@ -260,16 +261,21 @@ function GameRoom() {
               />
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/[0.04] px-4 py-4 text-center">
+            <div className="rounded-[1.8rem] border border-white/10 bg-white/[0.04] px-4 py-4 text-center shadow-[0_24px_60px_-36px_rgba(236,72,153,0.45)]">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
                 Suspense Meter
               </p>
-              <p className="mt-2 font-display text-3xl font-bold text-white">
+              <p className="mt-2 font-display text-[1.9rem] font-bold leading-tight text-white sm:text-3xl">
                 {gameState?.phase === 'spinning'
                   ? 'Bottle is spinning...'
                   : selectedPlayer
                     ? `${selectedPlayer.name} is up`
                     : 'Ready for the next spin'}
+              </p>
+              <p className="mt-2 text-sm text-slate-300">
+                {gameState?.phase === 'spinning'
+                  ? 'Let the suspense build while the bottle finds its target.'
+                  : 'Everyone sees the same live turn state instantly.'}
               </p>
             </div>
 

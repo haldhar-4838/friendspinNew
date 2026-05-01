@@ -9,7 +9,7 @@ function WhatsAppShareButton({ roomCode }) {
     <Button
       variant="secondary"
       onClick={() => window.open(whatsappUrl, '_blank', 'noopener,noreferrer')}
-      className="w-full"
+      className="min-h-[3.6rem] w-full justify-center"
     >
       WhatsApp Share
     </Button>

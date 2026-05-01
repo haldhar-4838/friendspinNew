@@ -8,10 +8,13 @@ import Lobby from './pages/Lobby';
 
 function App() {
   return (
-    <div className="min-h-screen bg-midnight bg-party-grid text-white">
-      <div className="min-h-screen bg-slate-950/70 backdrop-blur-sm">
+    <div className="min-h-screen bg-midnight bg-party-grid bg-party-hero text-white">
+      <div className="relative min-h-screen overflow-x-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.16),transparent_58%)]" />
+        <div className="pointer-events-none absolute left-[-10rem] top-32 h-64 w-64 rounded-full bg-bubblegum/10 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-10 right-[-8rem] h-64 w-64 rounded-full bg-aurora/10 blur-3xl" />
         <Navbar />
-        <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-12 pt-6 sm:px-6 lg:px-8">
+        <main className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-3 pb-12 pt-4 sm:px-6 sm:pt-6 lg:px-8">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-room" element={<CreateRoom />} />

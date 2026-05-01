@@ -24,9 +24,9 @@ function GameControls({
   };
 
   return (
-    <div className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
+    <div className="glass-outline space-y-4 rounded-[1.8rem] p-4 sm:p-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
             Round Controls
           </p>
@@ -36,10 +36,10 @@ function GameControls({
         </div>
         <span
           className={[
-            'rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em]',
+            'status-pill',
             connectionState === 'connected'
-              ? 'border border-aurora/30 bg-aurora/10 text-aurora'
-              : 'border border-yellow-400/30 bg-yellow-400/10 text-yellow-200',
+              ? 'border-aurora/30 bg-aurora/10 text-aurora'
+              : 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200',
           ].join(' ')}
         >
           {connectionState}
@@ -47,13 +47,14 @@ function GameControls({
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Button onClick={onSpin} disabled={!canSpin || isActionPending}>
+        <Button onClick={onSpin} disabled={!canSpin || isActionPending} className="w-full">
           Spin
         </Button>
         <Button
           variant="secondary"
           onClick={onNextRound}
           disabled={!canNextRound || isActionPending}
+          className="w-full"
         >
           Next Round
         </Button>

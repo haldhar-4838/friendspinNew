@@ -1,18 +1,41 @@
-function Input({ label, helperText, className = '', ...props }) {
+function Input({
+  label,
+  helperText,
+  state = 'default',
+  className = '',
+  ...props
+}) {
+  const stateStyles = {
+    default: 'border-white/10 focus:border-bubblegum/60 focus:ring-bubblegum/25',
+    error: 'border-red-400/40 focus:border-red-300 focus:ring-red-400/20',
+    success: 'border-aurora/40 focus:border-aurora/60 focus:ring-aurora/25',
+  };
+
+  const helperStyles = {
+    default: 'text-slate-400',
+    error: 'text-red-200',
+    success: 'text-aurora',
+  };
+
   return (
-    <label className="flex w-full flex-col gap-2">
+    <label className="flex w-full flex-col gap-2.5">
       {label ? (
-        <span className="text-sm font-medium text-slate-200">{label}</span>
+        <span className="text-sm font-medium tracking-[0.01em] text-slate-100">
+          {label}
+        </span>
       ) : null}
       <input
         className={[
-          'w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-bubblegum/60 focus:ring-2 focus:ring-bubblegum/25',
+          'w-full rounded-[1.4rem] border bg-slate-950/80 px-4 py-4 text-base text-white outline-none ring-2 ring-transparent transition placeholder:text-slate-500 focus:ring-2',
+          stateStyles[state],
           className,
         ].join(' ')}
         {...props}
       />
       {helperText ? (
-        <span className="text-xs text-slate-400">{helperText}</span>
+        <span className={['px-1 text-xs leading-5', helperStyles[state]].join(' ')}>
+          {helperText}
+        </span>
       ) : null}
     </label>
   );

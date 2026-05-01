@@ -59,7 +59,7 @@ function CreateRoom() {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-2xl py-8">
+    <div className="mx-auto grid w-full max-w-2xl py-4 sm:py-8">
       <Card
         title="Create Room"
         subtitle="Pick a display name and open a new FriendSpin lobby for your group."
@@ -71,6 +71,7 @@ function CreateRoom() {
             value={name}
             onChange={(event) => setName(event.target.value)}
             helperText="This name will be shown to everyone in the lobby."
+            state={error ? 'error' : 'default'}
           />
           <ModeSelect
             label="Game Mode"
@@ -80,14 +81,24 @@ function CreateRoom() {
           />
 
           {error ? (
-            <p className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+            <p className="rounded-[1.4rem] border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200">
               {error}
             </p>
           ) : null}
 
+          <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-4">
+            <p className="text-sm leading-7 text-slate-300">
+              Your room opens instantly and you become the host automatically.
+            </p>
+          </div>
+
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {isSubmitting ? <LoadingSpinner label="Creating your room..." /> : <span />}
-            <Button type="submit" fullWidth={false} disabled={isSubmitting}>
+            {isSubmitting ? (
+              <LoadingSpinner label="Creating your room..." />
+            ) : (
+              <p className="text-sm text-slate-400">Invite link ready after creation.</p>
+            )}
+            <Button type="submit" fullWidth disabled={isSubmitting} className="sm:w-auto">
               Create Room
             </Button>
           </div>

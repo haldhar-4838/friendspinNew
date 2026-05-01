@@ -1,11 +1,13 @@
 function ModeSelect({ label, value, options = [], onChange }) {
   return (
-    <label className="flex w-full flex-col gap-2">
-      <span className="text-sm font-medium text-slate-200">{label}</span>
+    <label className="flex w-full flex-col gap-2.5">
+      <span className="text-sm font-medium tracking-[0.01em] text-slate-100">
+        {label}
+      </span>
       <select
         value={value}
         onChange={onChange}
-        className="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-bubblegum/60 focus:ring-2 focus:ring-bubblegum/25"
+        className="w-full rounded-[1.4rem] border border-white/10 bg-slate-950/80 px-4 py-4 text-base text-white outline-none transition focus:border-bubblegum/60 focus:ring-2 focus:ring-bubblegum/25"
       >
         {options.map((option) => (
           <option key={option.id} value={option.id} className="bg-slate-900">
@@ -13,7 +15,7 @@ function ModeSelect({ label, value, options = [], onChange }) {
           </option>
         ))}
       </select>
-      <p className="text-xs text-slate-400">
+      <p className="px-1 text-xs leading-5 text-slate-400">
         {options.find((option) => option.id === value)?.description}
       </p>
     </label>

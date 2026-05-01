@@ -9,25 +9,53 @@
     color-scheme: dark;
   }
 
+  html {
+    @apply overflow-x-hidden bg-midnight;
+  }
+
   body {
-    @apply bg-midnight font-body text-white antialiased;
+    @apply overflow-x-hidden bg-midnight font-body text-white antialiased;
   }
 
   #root {
-    @apply min-h-screen;
+    @apply min-h-screen overflow-x-hidden;
   }
 
   ::selection {
     @apply bg-bubblegum/40 text-white;
   }
+
+  * {
+    scrollbar-color: rgba(236, 72, 153, 0.45) rgba(255, 255, 255, 0.05);
+  }
 }
 
 @layer components {
   .glass-panel {
-    @apply rounded-3xl border border-white/10 bg-white/5 shadow-party backdrop-blur-xl;
+    @apply rounded-[2rem] border border-white/[0.12] bg-white/[0.07] shadow-glass backdrop-blur-2xl;
   }
 
   .headline-gradient {
     @apply bg-gradient-to-r from-bubblegum via-flare to-aurora bg-clip-text text-transparent;
+  }
+
+  .touch-card {
+    @apply transition duration-300 ease-out hover:-translate-y-1 hover:border-white/15 hover:shadow-glow-pink;
+  }
+
+  .touch-button {
+    @apply transition duration-200 ease-out active:scale-[0.98];
+  }
+
+  .glass-outline {
+    @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  .status-pill {
+    @apply inline-flex items-center justify-center rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em];
+  }
+
+  .screen-shell {
+    @apply relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] shadow-glass;
   }
 }

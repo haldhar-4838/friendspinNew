@@ -77,7 +77,7 @@ function JoinRoom() {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-2xl py-8">
+    <div className="mx-auto grid w-full max-w-2xl py-4 sm:py-8">
       <Card
         title="Join Room"
         subtitle="Bring your name and a room code to jump straight into your group's lobby."
@@ -88,6 +88,7 @@ function JoinRoom() {
             placeholder="Enter your party name"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            state={error ? 'error' : 'default'}
           />
           <Input
             label="Room Code"
@@ -98,14 +99,25 @@ function JoinRoom() {
           />
 
           {error ? (
-            <p className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200">
+            <p className="rounded-[1.4rem] border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200">
               {error}
             </p>
           ) : null}
 
+          <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-4">
+            <p className="text-sm leading-7 text-slate-300">
+              Joining keeps your room code in uppercase and takes you straight
+              into the live lobby.
+            </p>
+          </div>
+
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {isSubmitting ? <LoadingSpinner label="Joining lobby..." /> : <span />}
-            <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <LoadingSpinner label="Joining lobby..." />
+            ) : (
+              <p className="text-sm text-slate-400">Ready for instant room sync.</p>
+            )}
+            <Button type="submit" fullWidth disabled={isSubmitting} className="sm:w-auto">
               Join Room
             </Button>
           </div>
