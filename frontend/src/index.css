@@ -98,6 +98,27 @@
   }
 }
 
+.app-header-shell {
+  background: linear-gradient(180deg, rgba(10, 17, 38, 0.84), rgba(7, 13, 33, 0.68));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 18px 44px -30px rgba(4, 8, 22, 0.92),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.app-header-home {
+  background: linear-gradient(180deg, rgba(10, 17, 38, 0.48), rgba(7, 13, 33, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 16px 34px -30px rgba(4, 8, 22, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.app-header-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 @keyframes homeGradientShift {
   0% {
     transform: scale(1) translate3d(0, 0, 0);
@@ -406,6 +427,31 @@
   animation: homeFadeUp 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.home-launch-panel {
+  padding: 1.35rem;
+  border-radius: 1.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(10, 18, 40, 0.68), rgba(7, 13, 33, 0.46)),
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 58%);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 28px 80px -42px rgba(4, 8, 22, 0.98),
+    0 20px 50px -34px rgba(139, 92, 246, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.home-launch-title {
+  text-wrap: balance;
+  text-shadow:
+    0 0 32px rgba(139, 92, 246, 0.16),
+    0 0 22px rgba(236, 72, 153, 0.1);
+}
+
+.home-button-stack {
+  margin-top: 0.25rem;
+}
+
 @media (max-width: 640px) {
   .home-gradient-layer {
     inset: -18%;
@@ -447,5 +493,10 @@
   .home-scene-grid {
     background-size: 3rem 3rem;
     opacity: 0.14;
+  }
+
+  .home-launch-panel {
+    padding: 1.2rem;
+    border-radius: 1.7rem;
   }
 }
