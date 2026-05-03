@@ -1,21 +1,65 @@
-function PlayerList({ players = [], currentPlayerId }) {
+function PlayerList({
+  players = [],
+  currentPlayerId,
+  variant = 'cards',
+  showScores = true,
+}) {
+  const isChipLayout = variant === 'chips';
+
   return (
-    <div className="space-y-3">
+    <div className={isChipLayout ? 'flex flex-wrap gap-2.5' : 'space-y-3'}>
       {players.length === 0 ? (
-        <div className="rounded-[1.6rem] border border-dashed border-white/10 px-4 py-6 text-center text-sm leading-7 text-slate-400">
+        <div className="w-full rounded-[1.6rem] border border-dashed border-white/10 px-4 py-6 text-center text-sm leading-7 text-slate-400">
           Waiting for players to join the room.
         </div>
       ) : null}
 
-      {players.map((player, index) => (
-        <article
-          key={player.id}
-          className="glass-outline rounded-[1.6rem] px-4 py-4 transition duration-300 hover:border-white/15 hover:bg-white/[0.06]"
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex min-w-0 items-start gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.25rem] bg-gradient-to-br from-bubblegum/70 via-flare/70 to-aurora/70 text-xl shadow-[0_0_26px_rgba(249,115,22,0.18)]">
-                {player.avatar || '🙂'}
+      {players.map((player, index) => {
+        const fallbackAvatar = player.name.slice(0, 1).toUpperCase();
+
+        if (isChipLayout) {
+          return (
+            <article
+              key={player.id}
+              className="glass-outline inline-flex min-h-[3.5rem] min-w-0 items-center gap-3 rounded-[1.45rem] px-3.5 py-3"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[1rem] bg-gradient-to-br from-bubblegum/75 via-neon/75 to-aurora/75 text-sm font-semibold text-white">
+                {player.avatar || fallbackAvatar}
+              </div>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="truncate text-sm font-semibold text-white">
+                    {player.name}
+                  </p>
+                  {player.isHost ? (
+                    <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
+                      Host
+                    </span>
+                  ) : null}
+                  {player.id === currentPlayerId ? (
+                    <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
+                      You
+                    </span>
+                  ) : null}
+                </div>
+                {showScores ? (
+                  <p className="mt-1 text-xs text-slate-400">
+                    {player.score || 0} pts
+                  </p>
+                ) : null}
+              </div>
+            </article>
+          );
+        }
+
+        return (
+          <article
+            key={player.id}
+            className="glass-outline flex items-center justify-between gap-3 rounded-[1.6rem] px-4 py-3.5 transition duration-300 hover:border-white/15 hover:bg-white/[0.06]"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[1.1rem] bg-gradient-to-br from-bubblegum/75 via-neon/75 to-aurora/75 text-sm font-semibold text-white shadow-[0_0_24px_rgba(139,92,246,0.2)]">
+                {player.avatar || fallbackAvatar}
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
@@ -23,32 +67,27 @@ function PlayerList({ players = [], currentPlayerId }) {
                     {index + 1}. {player.name}
                   </p>
                   {player.isHost ? (
-                    <span className="status-pill border-aurora/30 bg-aurora/15 text-aurora">
+                    <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
                       Host
                     </span>
                   ) : null}
                   {player.id === currentPlayerId ? (
-                    <span className="status-pill border-bubblegum/30 bg-bubblegum/10 text-bubblegum">
+                    <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
                       You
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-slate-400">
-                  Ready in the room
-                </p>
-                <p className="mt-2 text-sm text-slate-300">{player.score || 0} pts</p>
               </div>
             </div>
 
-            <div className="shrink-0 text-right">
-              <p className="font-display text-2xl font-bold text-white">{index + 1}</p>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-                seat
+            {showScores ? (
+              <p className="shrink-0 text-sm font-medium text-slate-300">
+                {player.score || 0} pts
               </p>
-            </div>
-          </div>
-        </article>
-      ))}
+            ) : null}
+          </article>
+        );
+      })}
     </div>
   );
 }

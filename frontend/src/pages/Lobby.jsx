@@ -89,81 +89,85 @@ function Lobby() {
 
   if (!room || room.code !== normalizedRoomCode) {
     return (
-      <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl items-center justify-center">
+      <div className="mx-auto flex min-h-[50vh] w-full max-w-md items-center justify-center">
         <Card
-          title="Lobby Loading"
-          subtitle="We are waiting for the room state to sync with the backend."
+          title="Lobby"
+          subtitle="Syncing the latest room state."
           className="w-full"
         >
-          <LoadingSpinner label="Syncing room..." />
+          <LoadingSpinner label="Loading room..." />
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-6 py-4 sm:py-6 lg:grid-cols-[1.08fr_0.92fr]">
+    <div className="grid gap-4 py-3 sm:py-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
       <Card
         title="Lobby"
-        subtitle="Invite players, confirm everyone is here, then start the game."
+        subtitle="Invite everyone, keep an eye on the room, and start when ready."
       >
         <div className="space-y-5">
-          <RoomCodeBox roomCode={room.code} />
-
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-            <span className="status-pill border-bubblegum/20 bg-bubblegum/10 text-bubblegum">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
               {modeLabel}
             </span>
-            <span className="status-pill border-white/10 bg-white/[0.04] text-slate-300">
-              {players.length} players
+            <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
+              {players.length} player{players.length === 1 ? '' : 's'}
             </span>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            <ShareButton roomCode={room.code} />
-            <WhatsAppShareButton roomCode={room.code} />
             {currentPlayerInRoom?.isHost ? (
-              <Button
-                variant="secondary"
-                onClick={handleStartGame}
-                disabled={players.length < 2}
-                className="min-h-[3.6rem] w-full"
-              >
-                Start Game
-              </Button>
+              <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
+                Host controls start
+              </span>
             ) : null}
           </div>
 
-          {statusMessage ? (
-            <p className="rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-7 text-slate-200">
-              {statusMessage}
-            </p>
+          <RoomCodeBox roomCode={room.code} />
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <ShareButton roomCode={room.code} />
+            <WhatsAppShareButton roomCode={room.code} />
+          </div>
+
+          {currentPlayerInRoom?.isHost ? (
+            <Button
+              onClick={handleStartGame}
+              disabled={players.length < 2}
+              className="min-h-[3.9rem] w-full text-base"
+            >
+              Start Game
+            </Button>
           ) : (
-            <p className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-7 text-slate-400">
-              {currentPlayerInRoom?.isHost
-                ? players.length < 2
-                  ? 'You need at least 2 players in the room before starting.'
-                  : 'You are the host. Start the game when everyone is ready.'
-                : 'Waiting for the host to start the game.'}
-            </p>
+            <div className="surface-muted px-4 py-3 text-sm leading-6 text-slate-300">
+              Waiting for the host to start the game.
+            </div>
           )}
+
+          <div className="surface-muted px-4 py-3 text-sm leading-6 text-slate-300">
+            {statusMessage ||
+              (currentPlayerInRoom?.isHost
+                ? players.length < 2
+                  ? 'You need at least 2 players before the game can begin.'
+                  : 'Everyone is in. Start whenever your group is ready.'
+                : 'Stay here while new players join and the host gets ready.')}
+          </div>
         </div>
       </Card>
 
-      <div className="grid gap-6">
-        <Card
-          title="Players"
-          subtitle={`${players.length} player${players.length === 1 ? '' : 's'} currently in the room.`}
-        >
-          <PlayerList players={players} currentPlayerId={currentPlayer?.id} />
-        </Card>
-        <Card
-          title="Leaderboard"
-          subtitle="Truth completed +10, Dare completed +20, Skip -5."
-        >
-          <Leaderboard players={players} />
-        </Card>
-      </div>
+      <Card
+        title="Players"
+        subtitle={`${players.length} player${players.length === 1 ? '' : 's'} in the room.`}
+      >
+        <PlayerList players={players} currentPlayerId={currentPlayer?.id} variant="chips" />
+
+        <div className="mt-5 border-t border-white/10 pt-5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="section-kicker">Leaderboard</p>
+            <p className="text-xs text-slate-500">Compact live scores</p>
+          </div>
+          <Leaderboard players={players} compact />
+        </div>
+      </Card>
     </div>
   );
 }

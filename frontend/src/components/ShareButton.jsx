@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import Button from './Button';
 
 function ShareButton({ roomCode }) {
   const shareUrl = `${window.location.origin}/join-room?roomCode=${roomCode}`;
+  const [label, setLabel] = useState('Copy Invite');
+
+  const resetLabel = (nextLabel) => {
+    setLabel(nextLabel);
+    window.setTimeout(() => setLabel('Copy Invite'), 1800);
+  };
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -11,6 +18,7 @@ function ShareButton({ roomCode }) {
           text: `Use room code ${roomCode} to join the party.`,
           url: shareUrl,
         });
+        resetLabel('Shared');
         return;
       } catch {
         // Ignore canceled native share requests and fall through to clipboard.
@@ -18,6 +26,7 @@ function ShareButton({ roomCode }) {
     }
 
     await navigator.clipboard.writeText(shareUrl);
+    resetLabel('Copied');
   };
 
   return (
@@ -26,7 +35,7 @@ function ShareButton({ roomCode }) {
       onClick={handleShare}
       className="min-h-[3.6rem] w-full justify-center"
     >
-      Share Invite Link
+      {label}
     </Button>
   );
 }

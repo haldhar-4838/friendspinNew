@@ -59,18 +59,18 @@ function CreateRoom() {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-2xl py-4 sm:py-8">
+    <div className="mx-auto flex w-full max-w-md flex-1 items-center py-4 sm:py-8">
       <Card
         title="Create Room"
-        subtitle="Pick a display name and open a new FriendSpin lobby for your group."
+        subtitle="Pick your name and open a fresh FriendSpin lobby."
+        className="w-full"
       >
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             label="Your Name"
-            placeholder="Enter your party name"
+            placeholder="Enter your name"
             value={name}
             onChange={(event) => setName(event.target.value)}
-            helperText="This name will be shown to everyone in the lobby."
             state={error ? 'error' : 'default'}
           />
           <ModeSelect
@@ -86,22 +86,16 @@ function CreateRoom() {
             </p>
           ) : null}
 
-          <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-4">
-            <p className="text-sm leading-7 text-slate-300">
-              Your room opens instantly and you become the host automatically.
-            </p>
-          </div>
+          {isSubmitting ? <LoadingSpinner label="Creating room..." /> : null}
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {isSubmitting ? (
-              <LoadingSpinner label="Creating your room..." />
-            ) : (
-              <p className="text-sm text-slate-400">Invite link ready after creation.</p>
-            )}
-            <Button type="submit" fullWidth disabled={isSubmitting} className="sm:w-auto">
-              Create Room
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            fullWidth
+            disabled={isSubmitting}
+            className="min-h-[3.9rem] text-base"
+          >
+            Create Room
+          </Button>
         </form>
       </Card>
     </div>

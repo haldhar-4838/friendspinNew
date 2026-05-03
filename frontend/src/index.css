@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply overflow-x-hidden bg-midnight font-body text-white antialiased;
+    @apply min-h-screen overflow-x-hidden bg-midnight font-body text-white antialiased;
   }
 
   #root {
@@ -25,6 +25,13 @@
     @apply bg-bubblegum/40 text-white;
   }
 
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
   * {
     scrollbar-color: rgba(236, 72, 153, 0.45) rgba(255, 255, 255, 0.05);
   }
@@ -32,7 +39,7 @@
 
 @layer components {
   .glass-panel {
-    @apply rounded-[2rem] border border-white/[0.12] bg-white/[0.07] shadow-glass backdrop-blur-2xl;
+    @apply rounded-[2rem] border border-white/[0.12] bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(15,23,42,0.66))] shadow-glass backdrop-blur-2xl;
   }
 
   .headline-gradient {
@@ -40,7 +47,7 @@
   }
 
   .touch-card {
-    @apply transition duration-300 ease-out hover:-translate-y-1 hover:border-white/15 hover:shadow-glow-pink;
+    @apply transition duration-300 ease-out md:hover:-translate-y-1 md:hover:border-white/15 md:hover:shadow-glow-pink;
   }
 
   .touch-button {
@@ -48,11 +55,31 @@
   }
 
   .glass-outline {
-    @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+    @apply border border-white/10 bg-white/[0.05] backdrop-blur-xl;
   }
 
   .status-pill {
     @apply inline-flex items-center justify-center rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em];
+  }
+
+  .section-kicker {
+    @apply text-[11px] uppercase tracking-[0.32em] text-slate-400;
+  }
+
+  .surface-muted {
+    @apply rounded-[1.6rem] border border-white/10 bg-white/[0.04];
+  }
+
+  .game-bottle-stage {
+    @apply bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.12),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(15,23,42,0.2))];
+  }
+
+  .bottle-stage-shell {
+    @apply rounded-full border border-white/10 bg-[radial-gradient(circle,rgba(255,255,255,0.06),rgba(15,23,42,0.96)_72%)] shadow-[0_26px_70px_-35px_rgba(139,92,246,0.68)];
+  }
+
+  .selected-player-glow {
+    @apply shadow-[0_0_0_1px_rgba(236,72,153,0.24),0_0_36px_rgba(236,72,153,0.3),0_18px_42px_-28px_rgba(236,72,153,0.7)];
   }
 
   .screen-shell {

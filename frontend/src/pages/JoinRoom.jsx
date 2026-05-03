@@ -77,15 +77,16 @@ function JoinRoom() {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-2xl py-4 sm:py-8">
+    <div className="mx-auto flex w-full max-w-md flex-1 items-center py-4 sm:py-8">
       <Card
         title="Join Room"
-        subtitle="Bring your name and a room code to jump straight into your group's lobby."
+        subtitle="Enter your name and room code to jump straight into the lobby."
+        className="w-full"
       >
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             label="Your Name"
-            placeholder="Enter your party name"
+            placeholder="Enter your name"
             value={name}
             onChange={(event) => setName(event.target.value)}
             state={error ? 'error' : 'default'}
@@ -95,7 +96,6 @@ function JoinRoom() {
             placeholder="ABCD12"
             value={roomCode}
             onChange={(event) => setRoomCode(event.target.value.toUpperCase())}
-            helperText="Room codes are shared by the player who created the room."
           />
 
           {error ? (
@@ -104,23 +104,16 @@ function JoinRoom() {
             </p>
           ) : null}
 
-          <div className="rounded-[1.7rem] border border-white/10 bg-white/[0.03] p-4">
-            <p className="text-sm leading-7 text-slate-300">
-              Joining keeps your room code in uppercase and takes you straight
-              into the live lobby.
-            </p>
-          </div>
+          {isSubmitting ? <LoadingSpinner label="Joining room..." /> : null}
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {isSubmitting ? (
-              <LoadingSpinner label="Joining lobby..." />
-            ) : (
-              <p className="text-sm text-slate-400">Ready for instant room sync.</p>
-            )}
-            <Button type="submit" fullWidth disabled={isSubmitting} className="sm:w-auto">
-              Join Room
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            fullWidth
+            disabled={isSubmitting}
+            className="min-h-[3.9rem] text-base"
+          >
+            Join Room
+          </Button>
         </form>
       </Card>
     </div>

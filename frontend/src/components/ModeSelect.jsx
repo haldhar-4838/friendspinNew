@@ -7,7 +7,7 @@ function ModeSelect({ label, value, options = [], onChange }) {
       <select
         value={value}
         onChange={onChange}
-        className="w-full rounded-[1.4rem] border border-white/10 bg-slate-950/80 px-4 py-4 text-base text-white outline-none transition focus:border-bubblegum/60 focus:ring-2 focus:ring-bubblegum/25"
+        className="w-full rounded-[1.45rem] border border-white/10 bg-white/[0.05] px-4 py-4 text-base text-white outline-none transition focus:border-bubblegum/60 focus:ring-2 focus:ring-bubblegum/25"
       >
         {options.map((option) => (
           <option key={option.id} value={option.id} className="bg-slate-900">

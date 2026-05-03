@@ -4,10 +4,10 @@ import ChallengeActions from '../components/ChallengeActions';
 import Card from '../components/Card';
 import ChoiceModal from '../components/ChoiceModal';
 import GameControls from '../components/GameControls';
-import GameCard from '../components/GameCard';
 import Leaderboard from '../components/Leaderboard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PlayerCircle from '../components/PlayerCircle';
+import PlayerList from '../components/PlayerList';
 import QuestionCard from '../components/QuestionCard';
 import SpinBottle from '../components/SpinBottle';
 import { useRoom } from '../context/RoomContext';
@@ -148,6 +148,24 @@ function GameRoom() {
     isHost &&
     ['prompt', 'resolved'].includes(gameState?.phase) &&
     connectionState === 'connected';
+  const roundNumber = Math.max(gameState?.round || 0, 1);
+  const spotlightPlayer = selectedPlayer || currentPlayerInRoom;
+  const spotlightFallback = spotlightPlayer?.name?.slice(0, 1).toUpperCase() || 'P';
+  const turnTitle =
+    gameState?.phase === 'spinning'
+      ? 'Bottle is spinning'
+      : selectedPlayer
+        ? `${selectedPlayer.name}'s turn`
+        : 'Ready for the next round';
+  const turnSummary =
+    statusMessage ||
+    (gameState?.phase === 'waiting'
+      ? 'Spin the bottle to pick the next player.'
+      : gameState?.phase === 'choice'
+        ? `${selectedPlayer?.name || 'A player'} is choosing Truth or Dare.`
+        : gameState?.phase === 'prompt'
+          ? 'The challenge is live. Finish it or skip it to keep the game moving.'
+          : 'Points are locked in. Start the next round when everyone is ready.');
 
   const handleSpin = () => {
     if (!room) {
@@ -217,10 +235,10 @@ function GameRoom() {
 
   if (!room) {
     return (
-      <div className="mx-auto flex min-h-[50vh] w-full max-w-2xl items-center justify-center">
+      <div className="mx-auto flex min-h-[50vh] w-full max-w-md items-center justify-center">
         <Card
           title="Game Room"
-          subtitle="We are syncing your live game state."
+          subtitle="Syncing the live game state."
           className="w-full"
         >
           <LoadingSpinner label="Connecting to the room..." />
@@ -241,70 +259,113 @@ function GameRoom() {
         modeLabel={modeLabel}
       />
 
-      <div className="grid gap-6 py-4 sm:py-6 lg:grid-cols-[1.08fr_0.92fr]">
-        <Card
-          title="Truth or Dare"
-          subtitle="Watch the bottle spin, see who it lands on, and let the chosen player pick their challenge."
-        >
-          <div className="space-y-5 sm:space-y-6">
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-bubblegum/10 via-slate-950/60 to-aurora/10 px-2 py-5 sm:px-6">
-              <div className="pointer-events-none absolute inset-x-10 top-6 h-24 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_70%)] blur-2xl" />
-              <PlayerCircle
-                players={room.players}
-                selectedPlayerId={selectedPlayer?.id}
-                currentPlayerId={currentPlayer?.id}
-              />
-              <SpinBottle
-                rotation={gameState?.spinnerRotation || 0}
-                duration={gameState?.spinDuration || 700}
-                isSpinning={gameState?.phase === 'spinning'}
+      <div className="grid gap-4 py-3 sm:py-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(18rem,0.94fr)]">
+        <div className="grid gap-4">
+          <Card className="overflow-hidden">
+            <div className="space-y-5">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
+                    Room {room.code}
+                  </span>
+                  <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
+                    Round {roundNumber}
+                  </span>
+                  <span className="status-pill border-neon/25 bg-neon/10 text-violet-200">
+                    {modeLabel}
+                  </span>
+                </div>
+
+                <div>
+                  <p className="section-kicker">Current Turn</p>
+                  <h1 className="mt-2 font-display text-[2rem] font-bold tracking-[-0.05em] text-white sm:text-[2.35rem]">
+                    {turnTitle}
+                  </h1>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
+                    {turnSummary}
+                  </p>
+                </div>
+              </div>
+
+              <div className="surface-muted p-4 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <div
+                    className={[
+                      'flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.15rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-sm font-semibold text-white shadow-[0_0_24px_rgba(236,72,153,0.24)]',
+                      selectedPlayer ? 'selected-player-glow' : '',
+                    ].join(' ')}
+                  >
+                    {spotlightPlayer?.avatar || spotlightFallback}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="section-kicker">Spotlight</p>
+                    <p className="mt-1 font-display text-2xl font-semibold text-white">
+                      {selectedPlayer ? selectedPlayer.name : 'No player yet'}
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-slate-300">
+                      {selectedPlayer
+                        ? `${selectedPlayer.name} is in the hot seat for this round.`
+                        : 'Spin the bottle to choose who goes next.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="surface-muted p-4 sm:p-5">
+                <div className="game-bottle-stage relative overflow-hidden rounded-[1.75rem] px-3 py-4 sm:px-4 sm:py-5">
+                  <div className="pointer-events-none absolute inset-x-12 top-8 h-20 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_72%)] blur-2xl" />
+
+                  <div className="lg:hidden">
+                    <div className="relative mx-auto flex min-h-[15rem] items-center justify-center">
+                      <SpinBottle
+                        rotation={gameState?.spinnerRotation || 0}
+                        duration={gameState?.spinDuration || 700}
+                        isSpinning={gameState?.phase === 'spinning'}
+                      />
+                    </div>
+
+                    <div className="mt-4">
+                      <PlayerCircle
+                        players={room.players}
+                        selectedPlayerId={selectedPlayer?.id}
+                        currentPlayerId={currentPlayer?.id}
+                        layout="chips"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative hidden min-h-[31rem] items-center justify-center lg:flex xl:min-h-[33rem]">
+                    <PlayerCircle
+                      players={room.players}
+                      selectedPlayerId={selectedPlayer?.id}
+                      currentPlayerId={currentPlayer?.id}
+                    />
+                    <SpinBottle
+                      rotation={gameState?.spinnerRotation || 0}
+                      duration={gameState?.spinDuration || 700}
+                      isSpinning={gameState?.phase === 'spinning'}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <GameControls
+                phase={gameState?.phase}
+                isHost={isHost}
+                canSpin={canSpin}
+                canNextRound={canNextRound}
+                onSpin={handleSpin}
+                onNextRound={handleNextRound}
+                selectedPlayerName={selectedPlayer?.name}
+                connectionState={connectionState}
+                isActionPending={isActionPending}
               />
             </div>
+          </Card>
 
-            <div className="rounded-[1.8rem] border border-white/10 bg-white/[0.04] px-4 py-4 text-center shadow-[0_24px_60px_-36px_rgba(236,72,153,0.45)]">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                Suspense Meter
-              </p>
-              <p className="mt-2 font-display text-[1.9rem] font-bold leading-tight text-white sm:text-3xl">
-                {gameState?.phase === 'spinning'
-                  ? 'Bottle is spinning...'
-                  : selectedPlayer
-                    ? `${selectedPlayer.name} is up`
-                    : 'Ready for the next spin'}
-              </p>
-              <p className="mt-2 text-sm text-slate-300">
-                {gameState?.phase === 'spinning'
-                  ? 'Let the suspense build while the bottle finds its target.'
-                  : 'Everyone sees the same live turn state instantly.'}
-              </p>
-            </div>
-
-            <GameControls
-              phase={gameState?.phase}
-              isHost={isHost}
-              canSpin={canSpin}
-              canNextRound={canNextRound}
-              onSpin={handleSpin}
-              onNextRound={handleNextRound}
-              selectedPlayerName={selectedPlayer?.name}
-              connectionState={connectionState}
-              isActionPending={isActionPending}
-            />
-          </div>
-        </Card>
-
-        <div className="grid gap-5">
-          <GameCard
-            title={`Round ${Math.max(gameState?.round || 0, 1)}`}
-            description={
-              statusMessage ||
-              'The host can spin the bottle to start the round.'
-            }
-            accent="from-bubblegum to-flare"
-          />
           <Card
             title="Challenge"
-            subtitle="Truths and dares are revealed here for the whole room."
+            subtitle="Truths and dares show up here for the whole room."
           >
             <div className="space-y-4">
               <QuestionCard
@@ -325,36 +386,20 @@ function GameRoom() {
             </div>
           </Card>
         </div>
-      </div>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        <GameCard
-          title="Room Status"
-          description={`Room ${room.code} is active with ${room.players.length} player${room.players.length === 1 ? '' : 's'}.`}
-          accent="from-bubblegum to-flare"
-        />
-        <GameCard
-          title="Selected Player"
-          description={
-            selectedPlayer
-              ? `${selectedPlayer.name} is in the spotlight for this round.`
-              : 'Nobody has been selected yet. Spin the bottle to choose a player.'
-          }
-          accent="from-aurora to-neon"
-        />
-        <GameCard
-          title={modeLabel}
-          description="Mode-based prompts, timer pressure, and score tracking are all synced live for everyone."
-          accent="from-flare to-aurora"
-        />
-      </div>
-
-      <div className="mt-6">
         <Card
-          title="Leaderboard"
-          subtitle="Truth completed +10, Dare completed +20, Skip -5."
+          title="Players"
+          subtitle={`${room.players.length} player${room.players.length === 1 ? '' : 's'} in the game.`}
         >
-          <Leaderboard players={room.players} />
+          <PlayerList players={room.players} currentPlayerId={currentPlayer?.id} />
+
+          <div className="mt-5 border-t border-white/10 pt-5">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="section-kicker">Leaderboard</p>
+              <p className="text-xs text-slate-500">Live scoring</p>
+            </div>
+            <Leaderboard players={room.players} compact />
+          </div>
         </Card>
       </div>
     </>

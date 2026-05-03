@@ -13,15 +13,15 @@ function ChoiceModal({
     return null;
   }
 
+  const fallbackAvatar = selectedPlayer.name.slice(0, 1).toUpperCase();
+
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-md">
       <div className="glass-panel w-full max-w-lg p-5 sm:p-8">
-        <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-          Selected Player
-        </p>
+        <p className="section-kicker">Selected Player</p>
         <div className="mt-3 flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-bubblegum/80 via-flare/80 to-aurora/80 text-3xl shadow-party">
-            {selectedPlayer.avatar || '🙂'}
+          <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-2xl font-bold text-white shadow-party">
+            {selectedPlayer.avatar || fallbackAvatar}
           </div>
           <div className="min-w-0">
             <h3 className="break-words font-display text-2xl font-bold text-white sm:text-3xl">
@@ -50,17 +50,19 @@ function ChoiceModal({
           <Button
             onClick={() => onChoose('truth')}
             disabled={!isCurrentPlayerTurn || isSubmitting}
-            className="min-h-14 w-full"
+            className="min-h-[5rem] w-full flex-col rounded-[1.7rem] bg-[linear-gradient(135deg,rgba(236,72,153,0.95),rgba(16,185,129,0.95))]"
           >
-            Truth
+            <span className="text-base">Truth</span>
+            <span className="text-xs font-medium text-white/75">Stay honest</span>
           </Button>
           <Button
             onClick={() => onChoose('dare')}
             disabled={!isCurrentPlayerTurn || isSubmitting}
             variant="secondary"
-            className="min-h-14 w-full"
+            className="min-h-[5rem] w-full flex-col rounded-[1.7rem] border-white/15 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(139,92,246,0.18))]"
           >
-            Dare
+            <span className="text-base">Dare</span>
+            <span className="text-xs font-medium text-slate-200">Take the risk</span>
           </Button>
         </div>
       </div>

@@ -26,7 +26,7 @@ function Input({
       ) : null}
       <input
         className={[
-          'w-full rounded-[1.4rem] border bg-slate-950/80 px-4 py-4 text-base text-white outline-none ring-2 ring-transparent transition placeholder:text-slate-500 focus:ring-2',
+          'w-full rounded-[1.45rem] border bg-white/[0.05] px-4 py-4 text-base text-white outline-none ring-2 ring-transparent transition placeholder:text-slate-500 focus:ring-2',
           stateStyles[state],
           className,
         ].join(' ')}
