@@ -4,12 +4,21 @@ import Card from '../components/Card';
 
 function Home() {
   return (
-    <div className="home-stage mx-auto flex w-full max-w-md flex-1 items-center justify-center py-4 sm:py-8">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.2rem]">
+    <div className="home-stage relative mx-auto flex min-h-[calc(100vh-9rem)] w-full flex-1 items-center justify-center py-4 sm:min-h-[calc(100vh-10rem)] sm:py-8">
+      <div className="home-scene pointer-events-none absolute inset-[-2.5rem] overflow-hidden">
+        <div className="home-scene-grid" />
         <div className="home-gradient-layer" />
         <div className="home-blob home-blob-1" />
         <div className="home-blob home-blob-2" />
         <div className="home-blob home-blob-3" />
+        <div className="home-blob home-blob-4" />
+        <div className="home-blob home-blob-5" />
+        <span className="home-confetti home-confetti-1" />
+        <span className="home-confetti home-confetti-2" />
+        <span className="home-confetti home-confetti-3" />
+        <span className="home-confetti home-confetti-4" />
+        <span className="home-confetti home-confetti-5" />
+        <span className="home-confetti home-confetti-6" />
         <span className="home-particle home-particle-1" />
         <span className="home-particle home-particle-2" />
         <span className="home-particle home-particle-3" />
@@ -17,7 +26,7 @@ function Home() {
         <span className="home-particle home-particle-5" />
       </div>
 
-      <Card className="home-hero-card relative z-10 w-full overflow-hidden">
+      <Card className="home-hero-card relative z-10 w-full max-w-md overflow-hidden">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle,rgba(255,255,255,0.09),transparent_70%)] blur-2xl" />
 
         <div className="relative flex flex-col items-center gap-6 text-center">

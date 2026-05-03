@@ -1,8 +1,8 @@
 import Button from './Button';
 
 function WhatsAppShareButton({ roomCode }) {
-  const inviteLink = `${window.location.origin}/join-room?roomCode=${roomCode}`;
-  const message = `Join my FriendSpin room.\nRoom Code: ${roomCode}\nJoin Link: ${inviteLink}`;
+  const inviteLink = `${window.location.origin}/join?roomCode=${roomCode}`;
+  const message = `Aaja FriendSpin khelte hain 😂🔥\nRoom Code: ${roomCode}\nJoin Link: ${inviteLink}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
 
   return (

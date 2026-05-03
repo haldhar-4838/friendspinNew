@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from './Button';
 
 function ShareButton({ roomCode }) {
-  const shareUrl = `${window.location.origin}/join-room?roomCode=${roomCode}`;
+  const shareUrl = `${window.location.origin}/join?roomCode=${roomCode}`;
   const [label, setLabel] = useState('Copy Invite');
 
   const resetLabel = (nextLabel) => {
