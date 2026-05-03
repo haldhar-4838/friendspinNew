@@ -18,7 +18,7 @@ function Navbar() {
         className={[
           'mx-auto flex max-w-5xl items-center justify-between gap-3 backdrop-blur-xl',
           isHome
-            ? 'app-header-home min-h-[3.5rem] rounded-[1.35rem] px-1.5 py-1.5 sm:min-h-[3.75rem] sm:px-2.5'
+            ? 'app-header-home min-h-[3.4rem] rounded-[1.2rem] px-1.5 py-1.5 sm:min-h-[3.6rem] sm:px-2.5'
             : 'app-header-shell min-h-[3.75rem] rounded-[1.5rem] px-2 py-2.5 sm:px-3',
         ].join(' ')}
       >
@@ -37,19 +37,10 @@ function Navbar() {
           <>
             <Link
               to="/join-room"
-              className="app-header-link inline-flex min-h-[2.4rem] items-center justify-center rounded-full px-3.5 text-sm font-semibold text-slate-200 sm:hidden"
+              className="app-header-link inline-flex min-h-[2.35rem] items-center justify-center rounded-full px-3.5 text-sm font-semibold text-slate-200"
             >
               Join
             </Link>
-
-            <nav className="hidden items-center gap-2 sm:flex">
-              <NavLink to="/create-room" className={linkStyles}>
-                Create
-              </NavLink>
-              <NavLink to="/join-room" className={linkStyles}>
-                Join
-              </NavLink>
-            </nav>
           </>
         ) : (
           <nav className="flex items-center gap-2">
