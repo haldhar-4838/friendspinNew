@@ -9,7 +9,7 @@ import Lobby from './pages/Lobby';
 function App() {
   return (
     <div className="min-h-screen bg-midnight text-white">
-      <div className="relative isolate flex min-h-screen flex-col overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.18),transparent_30%),radial-gradient(circle_at_left,rgba(236,72,153,0.18),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.18),transparent_24%),linear-gradient(180deg,#0f172a_0%,#050816_55%,#020617_100%)]">
+      <div className="relative isolate flex min-h-screen flex-col overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.22),transparent_30%),radial-gradient(circle_at_left,rgba(236,72,153,0.18),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,0.18),transparent_24%),linear-gradient(180deg,#0b1530_0%,#040816_55%,#020617_100%)]">
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_30%,transparent_70%,rgba(255,255,255,0.02))]" />
         <div className="pointer-events-none absolute left-[-7rem] top-24 h-48 w-48 rounded-full bg-bubblegum/20 blur-3xl sm:h-64 sm:w-64" />
         <div className="pointer-events-none absolute right-[-7rem] top-36 h-56 w-56 rounded-full bg-neon/20 blur-3xl sm:h-72 sm:w-72" />

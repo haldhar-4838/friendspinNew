@@ -50,7 +50,7 @@ function ChoiceModal({
           <Button
             onClick={() => onChoose('truth')}
             disabled={!isCurrentPlayerTurn || isSubmitting}
-            className="min-h-[5rem] w-full flex-col rounded-[1.7rem] bg-[linear-gradient(135deg,rgba(236,72,153,0.95),rgba(16,185,129,0.95))]"
+            className="min-h-[5rem] w-full flex-col rounded-[1.7rem] bg-[linear-gradient(135deg,rgba(139,92,246,0.96),rgba(236,72,153,0.95),rgba(34,211,238,0.88))]"
           >
             <span className="text-base">Truth</span>
             <span className="text-xs font-medium text-white/75">Stay honest</span>

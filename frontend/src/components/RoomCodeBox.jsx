@@ -14,7 +14,7 @@ function RoomCodeBox({ roomCode }) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-[1.9rem] border border-white/10 bg-[linear-gradient(135deg,rgba(236,72,153,0.14),rgba(139,92,246,0.08),rgba(16,185,129,0.14))] px-5 py-5 shadow-[0_24px_55px_-35px_rgba(236,72,153,0.7)]">
+    <div className="relative overflow-hidden rounded-[1.9rem] border border-white/10 bg-[linear-gradient(135deg,rgba(139,92,246,0.16),rgba(236,72,153,0.12),rgba(34,211,238,0.12))] px-5 py-5 shadow-[0_24px_55px_-35px_rgba(139,92,246,0.72)]">
       <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18),transparent_72%)]" />
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
