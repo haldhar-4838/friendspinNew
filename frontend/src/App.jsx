@@ -1,5 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import FloatingHearts from './components/FloatingHearts';
+import LanguageGate from './components/LanguageGate';
 import Navbar from './components/Navbar';
+import { useLanguage } from './context/LanguageContext';
 import CreateRoom from './pages/CreateRoom';
 import GameRoom from './pages/GameRoom';
 import Home from './pages/Home';
@@ -7,14 +10,17 @@ import JoinRoom from './pages/JoinRoom';
 import Lobby from './pages/Lobby';
 
 function App() {
+  const { hasSelectedLanguage, language } = useLanguage();
+
   return (
-    <div className="min-h-screen bg-midnight text-white">
+    <div className={['min-h-screen bg-midnight text-white', language === 'hi' ? 'lang-hi' : ''].join(' ')}>
       <div className="relative isolate flex min-h-screen flex-col overflow-x-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_28%,transparent_72%,rgba(255,255,255,0.025))]" />
-        <div className="pointer-events-none absolute left-[-8rem] top-20 h-52 w-52 rounded-full bg-bubblegum/20 blur-3xl sm:h-72 sm:w-72" />
-        <div className="pointer-events-none absolute right-[-8rem] top-28 h-56 w-56 rounded-full bg-neon/20 blur-3xl sm:h-80 sm:w-80" />
-        <div className="pointer-events-none absolute bottom-[-4rem] left-1/2 h-52 w-52 -translate-x-1/2 rounded-full bg-aurora/10 blur-3xl sm:h-80 sm:w-80" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_24%,transparent_72%,rgba(255,255,255,0.02))]" />
+        <div className="pointer-events-none absolute left-[-8rem] top-14 h-56 w-56 rounded-full bg-bubblegum/18 blur-3xl" />
+        <div className="pointer-events-none absolute right-[-8rem] top-24 h-56 w-56 rounded-full bg-neon/20 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-[-5rem] left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-red-400/10 blur-3xl" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_68%)]" />
+        <FloatingHearts />
 
         <Navbar />
 
@@ -29,6 +35,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
+
+        {!hasSelectedLanguage ? <LanguageGate /> : null}
       </div>
     </div>
   );

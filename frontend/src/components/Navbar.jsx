@@ -1,4 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import LanguageSwitch from './LanguageSwitch';
+import { useLanguage } from '../context/LanguageContext';
 
 const linkStyles = ({ isActive }) =>
   [
@@ -10,7 +12,7 @@ const linkStyles = ({ isActive }) =>
 
 function Navbar() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const { t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-30 px-4 pt-3">
@@ -53,28 +55,22 @@ function Navbar() {
           </span>
           <div className="min-w-0">
             <p className="truncate font-display text-[0.98rem] font-semibold tracking-[-0.04em] text-white">
-              FriendSpin
+              {t('common.brandName')}
             </p>
           </div>
         </Link>
 
-        {isHome ? (
-          <Link
-            to="/join-room"
-            className="app-header-link inline-flex min-h-[2.35rem] items-center justify-center rounded-full px-3.5 text-xs font-semibold text-slate-200 backdrop-blur-xl transition hover:bg-white/[0.08] hover:text-white"
-          >
-            Join
-          </Link>
-        ) : (
+        <div className="flex items-center gap-1.5">
+          <LanguageSwitch />
           <nav className="flex items-center gap-1.5">
             <NavLink to="/create-room" className={linkStyles}>
-              Create
+              {t('common.create')}
             </NavLink>
             <NavLink to="/join-room" className={linkStyles}>
-              Join
+              {t('common.join')}
             </NavLink>
           </nav>
-        )}
+        </div>
       </div>
     </header>
   );

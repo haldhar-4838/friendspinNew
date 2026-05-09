@@ -1,4 +1,7 @@
+import { useLanguage } from '../context/LanguageContext';
+
 function Leaderboard({ players = [], compact = false }) {
+  const { t } = useLanguage();
   const sortedPlayers = [...players].sort((firstPlayer, secondPlayer) => {
     if ((secondPlayer.score || 0) !== (firstPlayer.score || 0)) {
       return (secondPlayer.score || 0) - (firstPlayer.score || 0);
@@ -34,10 +37,10 @@ function Leaderboard({ players = [], compact = false }) {
                   compact ? 'text-sm' : '',
                 ].join(' ')}
               >
-                {index === 0 ? 'Winner' : `#${index + 1}`} {player.name}
+                {index === 0 ? t('leaderboard.winner') : `#${index + 1}`} {player.name}
               </p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.25em] text-slate-400">
-                {player.isHost ? 'Host' : 'Player'}
+                {player.isHost ? t('common.host') : t('common.player')}
               </p>
             </div>
           </div>
@@ -51,7 +54,7 @@ function Leaderboard({ players = [], compact = false }) {
               {player.score || 0}
             </p>
             <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400">
-              points
+              {t('common.points')}
             </p>
           </div>
         </div>

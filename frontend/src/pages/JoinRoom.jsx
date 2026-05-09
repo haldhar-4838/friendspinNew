@@ -4,11 +4,13 @@ import Button from '../components/Button';
 import Card from '../components/Card';
 import Input from '../components/Input';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useLanguage } from '../context/LanguageContext';
 import { useRoom } from '../context/RoomContext';
 import { saveRoomSession } from '../lib/roomSession';
 
 function JoinRoom() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const { socket, setCurrentPlayer, setRoom } = useRoom();
   const [name, setName] = useState('');
@@ -27,7 +29,7 @@ function JoinRoom() {
     event.preventDefault();
 
     if (!name.trim() || !roomCode.trim()) {
-      setError('Please enter your name and room code.');
+      setError(t('joinRoom.errorMissingDetails'));
       return;
     }
 
@@ -42,7 +44,7 @@ function JoinRoom() {
 
     const handleRoomJoined = (response) => {
       clearListeners();
-      console.log('[FriendSpin] room-joined received', response);
+      console.log('[TruthDare] room-joined received', response);
       setIsSubmitting(false);
       saveRoomSession({
         playerName: response.player.name,
@@ -53,7 +55,7 @@ function JoinRoom() {
       setCurrentPlayer(response.player);
       setRoom(response.room);
       console.log(
-        `[FriendSpin] navigating to lobby /lobby/${response.room.code.toUpperCase()}`,
+        `[TruthDare] navigating to lobby /lobby/${response.room.code.toUpperCase()}`,
       );
       navigate(`/lobby/${response.room.code.toUpperCase()}`);
     };
@@ -66,7 +68,7 @@ function JoinRoom() {
 
     socket.once('room-joined', handleRoomJoined);
     socket.once('room-error', handleRoomError);
-    console.log('[FriendSpin] join-room emitted', {
+    console.log('[TruthDare] join-room emitted', {
       name: name.trim(),
       roomCode: normalizedRoomCode,
     });
@@ -79,24 +81,24 @@ function JoinRoom() {
   return (
     <div className="w-full flex-1 py-4">
       <Card
-        title="Join Room"
-        subtitle="Enter your name and room code to jump straight into the lobby."
+        title={t('joinRoom.title')}
+        subtitle={t('joinRoom.subtitle')}
         className="w-full"
       >
         <div className="mb-4 inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-300">
-          Join the party
+          {t('joinRoom.badge')}
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
-            label="Your Name"
-            placeholder="Enter your name"
+            label={t('common.yourName')}
+            placeholder={t('joinRoom.namePlaceholder')}
             value={name}
             onChange={(event) => setName(event.target.value)}
             state={error ? 'error' : 'default'}
           />
           <Input
-            label="Room Code"
-            placeholder="ABCD12"
+            label={t('common.roomCode')}
+            placeholder={t('joinRoom.roomCodePlaceholder')}
             value={roomCode}
             onChange={(event) => setRoomCode(event.target.value.toUpperCase())}
           />
@@ -107,7 +109,7 @@ function JoinRoom() {
             </p>
           ) : null}
 
-          {isSubmitting ? <LoadingSpinner label="Joining room..." /> : null}
+          {isSubmitting ? <LoadingSpinner label={t('joinRoom.loading')} /> : null}
 
           <Button
             type="submit"
@@ -115,7 +117,7 @@ function JoinRoom() {
             disabled={isSubmitting}
             className="min-h-[3.9rem] text-base"
           >
-            Join Room
+            {t('common.joinRoom')}
           </Button>
         </form>
       </Card>

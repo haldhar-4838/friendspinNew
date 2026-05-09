@@ -1,16 +1,19 @@
+import { useLanguage } from '../context/LanguageContext';
+
 function PlayerList({
   players = [],
   currentPlayerId,
   variant = 'cards',
   showScores = true,
 }) {
+  const { t } = useLanguage();
   const isChipLayout = variant === 'chips';
 
   return (
     <div className={isChipLayout ? 'flex flex-wrap gap-2.5' : 'space-y-2.5'}>
       {players.length === 0 ? (
         <div className="w-full rounded-[1.6rem] border border-dashed border-white/10 px-4 py-6 text-center text-sm leading-7 text-slate-400">
-          Waiting for players to join the room.
+          {t('players.waiting')}
         </div>
       ) : null}
 
@@ -33,18 +36,18 @@ function PlayerList({
                   </p>
                   {player.isHost ? (
                     <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
-                      Host
+                      {t('common.host')}
                     </span>
                   ) : null}
                   {player.id === currentPlayerId ? (
                     <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
-                      You
+                      {t('common.you')}
                     </span>
                   ) : null}
                 </div>
                 {showScores ? (
                   <p className="mt-1 text-xs text-slate-400">
-                    {player.score || 0} pts
+                    {player.score || 0} {t('common.pts')}
                   </p>
                 ) : null}
               </div>
@@ -71,12 +74,12 @@ function PlayerList({
                   </p>
                   {player.isHost ? (
                     <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
-                      Host
+                      {t('common.host')}
                     </span>
                   ) : null}
                   {player.id === currentPlayerId ? (
                     <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
-                      You
+                      {t('common.you')}
                     </span>
                   ) : null}
                 </div>
@@ -85,7 +88,7 @@ function PlayerList({
 
             {showScores ? (
               <p className="shrink-0 text-sm font-medium text-slate-300">
-                {player.score || 0} pts
+                {player.score || 0} {t('common.pts')}
               </p>
             ) : null}
           </article>

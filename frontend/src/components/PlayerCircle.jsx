@@ -1,9 +1,12 @@
+import { useLanguage } from '../context/LanguageContext';
+
 function PlayerCircle({
   players = [],
   selectedPlayerId,
   currentPlayerId,
   layout = 'circle',
 }) {
+  const { t } = useLanguage();
   const renderPlayerCard = (player, index, compact = false) => {
     const isSelected = player.id === selectedPlayerId;
     const isCurrentPlayer = player.id === currentPlayerId;
@@ -54,8 +57,8 @@ function PlayerCircle({
                 : 'justify-center text-[8px] uppercase tracking-[0.18em]',
             ].join(' ')}
           >
-            {player.isHost ? <span>Host</span> : null}
-            {isCurrentPlayer ? <span>You</span> : null}
+            {player.isHost ? <span>{t('common.host')}</span> : null}
+            {isCurrentPlayer ? <span>{t('common.you')}</span> : null}
           </div>
 
           <p
@@ -64,7 +67,7 @@ function PlayerCircle({
               compact ? 'text-xs' : 'text-[10px]',
             ].join(' ')}
           >
-            {player.score || 0} pts
+            {player.score || 0} {t('common.pts')}
           </p>
         </div>
       </div>

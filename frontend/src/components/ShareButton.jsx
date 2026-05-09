@@ -1,24 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from './Button';
+import { useLanguage } from '../context/LanguageContext';
 
 function ShareButton({ roomCode }) {
   const shareUrl = `${window.location.origin}/join?roomCode=${roomCode}`;
-  const [label, setLabel] = useState('Copy Invite');
+  const { t } = useLanguage();
+  const defaultLabel = t('common.copyInvite');
+  const [label, setLabel] = useState(defaultLabel);
+
+  useEffect(() => {
+    setLabel(defaultLabel);
+  }, [defaultLabel]);
 
   const resetLabel = (nextLabel) => {
     setLabel(nextLabel);
-    window.setTimeout(() => setLabel('Copy Invite'), 1800);
+    window.setTimeout(() => setLabel(defaultLabel), 1800);
   };
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Join my FriendSpin room',
-          text: `Use room code ${roomCode} to join the party.`,
+          title: t('share.title'),
+          text: t('share.text', { roomCode }),
           url: shareUrl,
         });
-        resetLabel('Shared');
+        resetLabel(t('common.shared'));
         return;
       } catch {
         // Ignore canceled native share requests and fall through to clipboard.
@@ -26,7 +33,7 @@ function ShareButton({ roomCode }) {
     }
 
     await navigator.clipboard.writeText(shareUrl);
-    resetLabel('Copied');
+    resetLabel(t('common.copied'));
   };
 
   return (

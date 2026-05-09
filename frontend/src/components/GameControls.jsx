@@ -1,4 +1,5 @@
 import Button from './Button';
+import { useLanguage } from '../context/LanguageContext';
 
 function GameControls({
   phase,
@@ -11,23 +12,24 @@ function GameControls({
   connectionState,
   isActionPending = false,
 }) {
+  const { t } = useLanguage();
   const phaseCopy = {
     waiting: isHost
-      ? 'Everyone is ready. Spin the bottle to choose the next player.'
-      : 'Waiting for the host to spin the bottle.',
-    spinning: 'The bottle is spinning. Watch where it lands.',
+      ? t('game.roundControlsHost')
+      : t('game.roundControlsGuest'),
+    spinning: t('game.roundControlsSpinning'),
     choice: selectedPlayerName
-      ? `${selectedPlayerName} is choosing between Truth and Dare.`
-      : 'Waiting for the selected player to choose.',
-    prompt: 'Complete the prompt, then move on when the room is ready.',
-    resolved: 'Points locked in. Start the next round when everyone is ready.',
+      ? t('game.roundControlsChoice', { name: selectedPlayerName })
+      : t('game.roundControlsChoiceFallback'),
+    prompt: t('game.roundControlsPrompt'),
+    resolved: t('game.roundControlsResolved'),
   };
 
   return (
     <div className="surface-muted space-y-4 p-4">
       <div className="flex flex-col gap-3">
         <div className="min-w-0 flex-1">
-          <p className="section-kicker">Round Controls</p>
+          <p className="section-kicker">{t('game.roundControls')}</p>
           <p className="mt-2 text-sm leading-6 text-slate-300">
             {phaseCopy[phase] || phaseCopy.waiting}
           </p>
@@ -40,7 +42,9 @@ function GameControls({
               : 'border-yellow-400/30 bg-yellow-400/10 text-yellow-200',
           ].join(' ')}
         >
-          {connectionState}
+          {connectionState === 'connected'
+            ? t('common.connectionConnected')
+            : t('common.connectionDisconnected')}
         </span>
       </div>
 
@@ -50,7 +54,7 @@ function GameControls({
           disabled={!canSpin || isActionPending}
           className="min-h-[3.9rem] w-full text-base"
         >
-          Spin Bottle
+          {t('game.spinToPlay')}
         </Button>
         <Button
           variant="secondary"
@@ -58,13 +62,13 @@ function GameControls({
           disabled={!canNextRound || isActionPending}
           className="min-h-[3.9rem] w-full text-base"
         >
-          Next Round
+          {t('game.nextRound')}
         </Button>
       </div>
 
       {!isHost ? (
         <p className="text-xs leading-6 text-slate-500">
-          The host controls the spin and round reset for this room.
+          {t('game.hostControlsRound')}
         </p>
       ) : null}
     </div>

@@ -8,11 +8,13 @@ import PlayerList from '../components/PlayerList';
 import RoomCodeBox from '../components/RoomCodeBox';
 import ShareButton from '../components/ShareButton';
 import WhatsAppShareButton from '../components/WhatsAppShareButton';
+import { useLanguage } from '../context/LanguageContext';
 import { useRoom } from '../context/RoomContext';
 import { gameModes } from '../data/gameModes';
 
 function Lobby() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { roomCode } = useParams();
   const normalizedRoomCode = roomCode?.toUpperCase() || '';
   const { room, currentPlayer, socket, setRoom } = useRoom();
@@ -20,22 +22,21 @@ function Lobby() {
   const [players, setPlayers] = useState(room?.players || []);
   const currentPlayerInRoom =
     players.find((player) => player.id === currentPlayer?.id) || null;
-  const modeLabel =
-    gameModes.find((mode) => mode.id === room?.mode)?.label || 'Normal Mode';
+  const modeLabel = t(`modes.${room?.mode || gameModes[0].id}.label`);
 
   useEffect(() => {
     const handlePlayerJoined = ({ player }) => {
-      setStatusMessage(`${player.name} joined the room.`);
+      setStatusMessage(t('lobby.playerJoined', { name: player.name }));
     };
     const handlePlayerLeft = ({ playerName }) => {
-      setStatusMessage(`${playerName} left the room.`);
+      setStatusMessage(t('lobby.playerLeft', { name: playerName }));
     };
     const handleRoomUpdated = (syncedRoom) => {
       setRoom(syncedRoom);
       setPlayers(syncedRoom.players || []);
     };
     const handleGameStarted = ({ room: startedRoom }) => {
-      console.log('[FriendSpin] game-started received', startedRoom);
+      console.log('[TruthDare] game-started received', startedRoom);
       setRoom(startedRoom);
       navigate(`/game/${startedRoom.code}`);
     };
@@ -51,7 +52,7 @@ function Lobby() {
       socket.off('room-updated', handleRoomUpdated);
       socket.off('game-started', handleGameStarted);
     };
-  }, [navigate, setRoom, socket]);
+  }, [navigate, setRoom, socket, t]);
 
   useEffect(() => {
     setPlayers(room?.players || []);
@@ -91,11 +92,11 @@ function Lobby() {
     return (
       <div className="mx-auto flex min-h-[50vh] w-full max-w-md items-center justify-center">
         <Card
-          title="Lobby"
-          subtitle="Syncing the latest room state."
+          title={t('lobby.syncingTitle')}
+          subtitle={t('lobby.syncingSubtitle')}
           className="w-full"
         >
-          <LoadingSpinner label="Loading room..." />
+          <LoadingSpinner label={t('lobby.loading')} />
         </Card>
       </div>
     );
@@ -104,8 +105,8 @@ function Lobby() {
   return (
     <div className="grid gap-3 py-3">
       <Card
-        title="Lobby"
-        subtitle="Invite everyone, keep an eye on the room, and start when ready."
+        title={t('lobby.title')}
+        subtitle={t('lobby.subtitle')}
       >
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
@@ -113,26 +114,26 @@ function Lobby() {
               {modeLabel}
             </span>
             <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
-              {players.length} player{players.length === 1 ? '' : 's'}
+              {t('lobby.playerCount', { count: players.length })}
             </span>
             {currentPlayerInRoom?.isHost ? (
               <span className="status-pill border-aurora/25 bg-aurora/10 text-aurora">
-                Host controls start
+                {t('lobby.hostControlsStart')}
               </span>
             ) : null}
           </div>
 
           <div className="surface-muted p-4">
-            <p className="section-kicker">Room Status</p>
+            <p className="section-kicker">{t('lobby.roomStatus')}</p>
             <h3 className="mt-2 font-display text-[1.45rem] font-semibold tracking-[-0.04em] text-white">
               {players.length < 2
-                ? 'Waiting for more players'
-                : 'Your room is ready to light up'}
+                ? t('lobby.waitingForPlayers')
+                : t('lobby.roomReady')}
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-300">
               {currentPlayerInRoom?.isHost
-                ? 'Share the code, watch the lobby fill up, and start the game when the energy feels right.'
-                : 'You are in. Hang here while the host gets everyone together.'}
+                ? t('lobby.hostRoomStatus')
+                : t('lobby.guestRoomStatus')}
             </p>
           </div>
 
@@ -149,11 +150,11 @@ function Lobby() {
               disabled={players.length < 2}
               className="min-h-[3.9rem] w-full text-base"
             >
-              Start Game
+              {t('lobby.startGame')}
             </Button>
           ) : (
             <div className="surface-muted px-4 py-3 text-sm leading-6 text-slate-300">
-              Waiting for the host to start the game.
+              {t('lobby.waitingHostStart')}
             </div>
           )}
 
@@ -161,23 +162,23 @@ function Lobby() {
             {statusMessage ||
               (currentPlayerInRoom?.isHost
                 ? players.length < 2
-                  ? 'You need at least 2 players before the game can begin.'
-                  : 'Everyone is in. Start whenever your group is ready.'
-                : 'Stay here while new players join and the host gets ready.')}
+                  ? t('lobby.needTwoPlayers')
+                  : t('lobby.everyoneIn')
+                : t('lobby.guestWaiting'))}
           </div>
         </div>
       </Card>
 
       <Card
-        title="Players"
-        subtitle={`${players.length} player${players.length === 1 ? '' : 's'} in the room.`}
+        title={t('common.players')}
+        subtitle={t('lobby.playersInRoom', { count: players.length })}
       >
         <PlayerList players={players} currentPlayerId={currentPlayer?.id} variant="chips" />
 
         <div className="mt-5 border-t border-white/10 pt-5">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <p className="section-kicker">Leaderboard</p>
-            <p className="text-xs text-slate-500">Compact live scores</p>
+            <p className="section-kicker">{t('common.leaderboard')}</p>
+            <p className="text-xs text-slate-500">{t('lobby.compactLiveScores')}</p>
           </div>
           <Leaderboard players={players} compact />
         </div>

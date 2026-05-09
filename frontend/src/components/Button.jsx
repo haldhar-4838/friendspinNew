@@ -20,6 +20,7 @@ function Button({
     <button
       className={[
         'touch-button relative inline-flex min-h-[3.5rem] items-center justify-center gap-2 overflow-hidden rounded-[1.35rem] px-4 py-3 text-sm font-semibold tracking-[0.01em] transition duration-200 disabled:cursor-not-allowed disabled:opacity-55',
+        variant === 'primary' ? 'button-primary-neon' : '',
         variants[variant],
         fullWidth ? 'w-full' : '',
         className,

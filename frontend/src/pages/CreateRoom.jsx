@@ -1,27 +1,38 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Input from '../components/Input';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ModeSelect from '../components/ModeSelect';
+import { useLanguage } from '../context/LanguageContext';
 import { useRoom } from '../context/RoomContext';
 import { defaultGameMode, gameModes } from '../data/gameModes';
 import { saveRoomSession } from '../lib/roomSession';
 
 function CreateRoom() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { socket, setCurrentPlayer, setRoom } = useRoom();
   const [name, setName] = useState('');
   const [mode, setMode] = useState(defaultGameMode);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const localizedModes = useMemo(
+    () =>
+      gameModes.map((option) => ({
+        ...option,
+        label: t(`modes.${option.id}.label`),
+        description: t(`modes.${option.id}.description`),
+      })),
+    [t],
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!name.trim()) {
-      setError('Please enter your name before creating a room.');
+      setError(t('create.errorMissingName'));
       return;
     }
 
@@ -61,25 +72,25 @@ function CreateRoom() {
   return (
     <div className="w-full flex-1 py-4">
       <Card
-        title="Create Room"
-        subtitle="Pick your name and open a fresh FriendSpin lobby."
+        title={t('create.title')}
+        subtitle={t('create.subtitle')}
         className="w-full"
       >
         <div className="mb-4 inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-300">
-          Host setup
+          {t('create.badge')}
         </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
-            label="Your Name"
-            placeholder="Enter your name"
+            label={t('common.yourName')}
+            placeholder={t('create.namePlaceholder')}
             value={name}
             onChange={(event) => setName(event.target.value)}
             state={error ? 'error' : 'default'}
           />
           <ModeSelect
-            label="Game Mode"
+            label={t('common.gameMode')}
             value={mode}
-            options={gameModes}
+            options={localizedModes}
             onChange={(event) => setMode(event.target.value)}
           />
 
@@ -89,7 +100,7 @@ function CreateRoom() {
             </p>
           ) : null}
 
-          {isSubmitting ? <LoadingSpinner label="Creating room..." /> : null}
+          {isSubmitting ? <LoadingSpinner label={t('create.loading')} /> : null}
 
           <Button
             type="submit"
@@ -97,7 +108,7 @@ function CreateRoom() {
             disabled={isSubmitting}
             className="min-h-[3.9rem] text-base"
           >
-            Create Room
+            {t('common.createRoom')}
           </Button>
         </form>
       </Card>

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
+import { useLanguage } from '../context/LanguageContext';
 
 function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="home-stage relative mx-auto flex min-h-[calc(100vh-4.25rem)] w-full flex-1 items-center py-4">
       <div className="home-glow-orb home-glow-orb-1" />
@@ -13,20 +16,20 @@ function Home() {
           <div className="flex flex-col gap-6">
             <div className="space-y-3">
               <div className="inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-300">
-                Live Party Game
+                {t('home.badge')}
               </div>
               <h1 className="font-display text-[3rem] font-bold leading-[0.9] tracking-[-0.08em] text-white">
-                Spin. Laugh. Dare.
+                {t('home.title')}
               </h1>
               <p className="max-w-[22rem] text-sm leading-6 text-slate-300">
-                Create a room, invite friends, and play Truth or Dare live.
+                {t('home.subtitle')}
               </p>
             </div>
 
             <div className="grid gap-3">
               <Link to="/create-room" className="w-full">
                 <Button className="min-h-[4rem] w-full rounded-[1.4rem] text-base">
-                  Create Room
+                  {t('common.createRoom')}
                 </Button>
               </Link>
               <Link to="/join-room" className="w-full">
@@ -34,20 +37,20 @@ function Home() {
                   variant="secondary"
                   className="min-h-[4rem] w-full rounded-[1.4rem] text-base"
                 >
-                  Join Room
+                  {t('common.joinRoom')}
                 </Button>
               </Link>
             </div>
 
             <div className="flex flex-wrap gap-2">
               <div className="surface-muted px-3 py-2.5">
-                <p className="text-xs font-semibold text-white">Fast Room</p>
+                <p className="text-xs font-semibold text-white">{t('home.featureFastRoom')}</p>
               </div>
               <div className="surface-muted px-3 py-2.5">
-                <p className="text-xs font-semibold text-white">Live Sync</p>
+                <p className="text-xs font-semibold text-white">{t('home.featureLiveSync')}</p>
               </div>
               <div className="surface-muted px-3 py-2.5">
-                <p className="text-xs font-semibold text-white">Share Code</p>
+                <p className="text-xs font-semibold text-white">{t('home.featureShareCode')}</p>
               </div>
             </div>
           </div>

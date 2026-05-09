@@ -10,12 +10,14 @@ import PlayerCircle from '../components/PlayerCircle';
 import PlayerList from '../components/PlayerList';
 import QuestionCard from '../components/QuestionCard';
 import SpinBottle from '../components/SpinBottle';
+import { useLanguage } from '../context/LanguageContext';
 import { useRoom } from '../context/RoomContext';
 import { gameModes } from '../data/gameModes';
 import { playRevealSound, playSpinSound } from '../lib/gameAudio';
 
 function GameRoom() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const { roomCode } = useParams();
   const { room, currentPlayer, socket, connectionState } = useRoom();
   const [statusMessage, setStatusMessage] = useState('');
@@ -38,34 +40,50 @@ function GameRoom() {
   useEffect(() => {
     const handleSpinStarted = () => {
       playSpinSound();
-      setStatusMessage('The bottle is spinning...');
+      setStatusMessage(t('game.spinStarted'));
     };
 
     const handlePlayerSelected = ({ player }) => {
       playRevealSound();
       setStatusMessage(
-        player ? `${player.name} was selected.` : 'A player was selected.',
+        player
+          ? t('game.playerSelected', { name: player.name })
+          : t('game.playerSelectedFallback'),
       );
     };
 
     const handlePromptRevealed = ({ player, choice, autoSelected }) => {
       playRevealSound();
+      const localizedChoice =
+        choice === 'truth' ? t('common.truth') : t('common.dare');
       setStatusMessage(
         player
           ? autoSelected
-            ? `${player.name} took too long, so ${choice} was auto-picked.`
-            : `${player.name} chose ${choice}.`
-          : `The selected player chose ${choice}.`,
+            ? t('game.autoPicked', {
+                name: player.name,
+                choice: localizedChoice,
+              })
+            : t('game.choiceMade', {
+                name: player.name,
+                choice: localizedChoice,
+              })
+          : t('game.choiceMadeFallback', { choice: localizedChoice }),
       );
     };
 
     const handleRoundReset = () => {
-      setStatusMessage('New round ready. Spin again when everyone is set.');
+      setStatusMessage(t('game.roundReset'));
     };
 
     const handleRoundScored = ({ player, action, points }) => {
+      const localizedAction =
+        action === 'completed' ? t('game.completed') : t('game.skipped');
       setStatusMessage(
-        `${player.name} ${action === 'completed' ? 'completed the round' : 'skipped the round'} (${points > 0 ? `+${points}` : points} pts).`,
+        t('game.roundScored', {
+          name: player.name,
+          action: localizedAction,
+          points,
+        }),
       );
     };
 
@@ -82,7 +100,7 @@ function GameRoom() {
       socket.off('round-reset', handleRoundReset);
       socket.off('round-scored', handleRoundScored);
     };
-  }, [socket]);
+  }, [socket, t]);
 
   useEffect(() => {
     const deadline = room?.gameState?.choiceDeadlineAt;
@@ -111,11 +129,11 @@ function GameRoom() {
     }
 
     if (phase === 'waiting' && room?.gameState?.round === 0) {
-      setStatusMessage('The game is live. Host can spin when ready.');
+      setStatusMessage(t('game.liveReady'));
     }
 
     previousPhaseRef.current = phase;
-  }, [room]);
+  }, [room, t]);
 
   const currentPlayerInRoom = useMemo(
     () => room?.players.find((player) => player.id === currentPlayer?.id) || null,
@@ -131,8 +149,7 @@ function GameRoom() {
   );
 
   const gameState = room?.gameState;
-  const modeLabel =
-    gameModes.find((mode) => mode.id === room?.mode)?.label || 'Normal Mode';
+  const modeLabel = t(`modes.${room?.mode || gameModes[0].id}.label`);
   const isHost = Boolean(currentPlayerInRoom?.isHost);
   const isSelectedPlayer = Boolean(
     selectedPlayer && currentPlayerInRoom?.id === selectedPlayer.id,
@@ -153,19 +170,21 @@ function GameRoom() {
   const spotlightFallback = spotlightPlayer?.name?.slice(0, 1).toUpperCase() || 'P';
   const turnTitle =
     gameState?.phase === 'spinning'
-      ? 'Bottle is spinning'
+      ? t('game.titleSpinning')
       : selectedPlayer
-        ? `${selectedPlayer.name}'s turn`
-        : 'Ready for the next round';
+        ? t('game.turnTitle', { name: selectedPlayer.name })
+        : t('game.titleWaiting');
   const turnSummary =
     statusMessage ||
     (gameState?.phase === 'waiting'
-      ? 'Spin the bottle to pick the next player.'
+      ? t('game.waitingSummary')
       : gameState?.phase === 'choice'
-        ? `${selectedPlayer?.name || 'A player'} is choosing Truth or Dare.`
+        ? t('game.choiceSummary', {
+            name: selectedPlayer?.name || t('common.players'),
+          })
         : gameState?.phase === 'prompt'
-          ? 'The challenge is live. Finish it or skip it to keep the game moving.'
-          : 'Points are locked in. Start the next round when everyone is ready.');
+          ? t('game.promptSummary')
+          : t('game.resolvedSummary'));
 
   const handleSpin = () => {
     if (!room) {
@@ -237,11 +256,11 @@ function GameRoom() {
     return (
       <div className="mx-auto flex min-h-[50vh] w-full max-w-md items-center justify-center">
         <Card
-          title="Game Room"
-          subtitle="Syncing the live game state."
+          title={t('game.syncingTitle')}
+          subtitle={t('game.syncingSubtitle')}
           className="w-full"
         >
-          <LoadingSpinner label="Connecting to the room..." />
+          <LoadingSpinner label={t('game.loading')} />
         </Card>
       </div>
     );
@@ -266,10 +285,10 @@ function GameRoom() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
-                    Room {room.code}
+                    {t('common.room')} {room.code}
                   </span>
                   <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
-                    Round {roundNumber}
+                    {t('common.round')} {roundNumber}
                   </span>
                   <span className="status-pill border-neon/25 bg-neon/10 text-violet-200">
                     {modeLabel}
@@ -277,7 +296,7 @@ function GameRoom() {
                 </div>
 
                 <div>
-                  <p className="section-kicker">Current Turn</p>
+                  <p className="section-kicker">{t('common.currentTurn')}</p>
                   <h1 className="mt-2 font-display text-[1.85rem] font-bold tracking-[-0.05em] text-white">
                     {turnTitle}
                   </h1>
@@ -287,7 +306,7 @@ function GameRoom() {
                 </div>
               </div>
 
-              <div className="surface-muted p-4">
+              <div className="surface-muted truthdare-spotlight p-4">
                 <div className="flex items-start gap-3">
                   <div
                     className={[
@@ -298,20 +317,20 @@ function GameRoom() {
                     {spotlightPlayer?.avatar || spotlightFallback}
                   </div>
                   <div className="min-w-0">
-                    <p className="section-kicker">Spotlight</p>
+                    <p className="section-kicker">{t('game.spotlight')}</p>
                     <p className="mt-1 font-display text-[1.35rem] font-semibold text-white">
-                      {selectedPlayer ? selectedPlayer.name : 'No player yet'}
+                      {selectedPlayer ? selectedPlayer.name : t('game.noPlayerYet')}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-300">
                       {selectedPlayer
-                        ? `${selectedPlayer.name} is in the hot seat for this round.`
-                        : 'Spin the bottle to choose who goes next.'}
+                        ? t('game.spotlightSelected', { name: selectedPlayer.name })
+                        : t('game.spotlightEmpty')}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="surface-muted p-4">
+              <div className="surface-muted truthdare-wheel-shell p-4">
                 <div className="game-bottle-stage relative overflow-hidden rounded-[1.45rem] px-3 py-4">
                   <div className="pointer-events-none absolute inset-x-12 top-8 h-20 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_72%)] blur-2xl" />
 
@@ -349,8 +368,8 @@ function GameRoom() {
           </Card>
 
           <Card
-            title="Challenge"
-            subtitle="Truths and dares show up here for the whole room."
+            title={t('game.challengeTitle')}
+            subtitle={t('game.challengeSubtitle')}
           >
             <div className="space-y-4">
               <QuestionCard
@@ -373,15 +392,15 @@ function GameRoom() {
         </div>
 
         <Card
-          title="Players"
-          subtitle={`${room.players.length} player${room.players.length === 1 ? '' : 's'} in the game.`}
+          title={t('common.players')}
+          subtitle={t('game.playersInGame', { count: room.players.length })}
         >
           <PlayerList players={room.players} currentPlayerId={currentPlayer?.id} />
 
           <div className="mt-5 border-t border-white/10 pt-5">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="section-kicker">Leaderboard</p>
-              <p className="text-xs text-slate-500">Live scoring</p>
+              <p className="section-kicker">{t('common.leaderboard')}</p>
+              <p className="text-xs text-slate-500">{t('game.liveScoring')}</p>
             </div>
             <Leaderboard players={room.players} compact />
           </div>
