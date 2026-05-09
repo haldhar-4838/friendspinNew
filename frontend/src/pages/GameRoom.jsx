@@ -287,27 +287,6 @@ function GameRoom() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
-                <div className="surface-muted p-4">
-                  <p className="section-kicker">Players</p>
-                  <p className="mt-2 font-display text-xl font-semibold text-white">
-                    {room.players.length}
-                  </p>
-                </div>
-                <div className="surface-muted p-4">
-                  <p className="section-kicker">Connection</p>
-                  <p className="mt-2 font-display text-lg font-semibold text-white capitalize">
-                    {connectionState}
-                  </p>
-                </div>
-                <div className="surface-muted p-4">
-                  <p className="section-kicker">Phase</p>
-                  <p className="mt-2 font-display text-lg font-semibold text-white capitalize">
-                    {gameState?.phase || 'waiting'}
-                  </p>
-                </div>
-              </div>
-
               <div className="surface-muted p-4">
                 <div className="flex items-start gap-3">
                   <div
