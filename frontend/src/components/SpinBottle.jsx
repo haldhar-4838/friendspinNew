@@ -1,6 +1,7 @@
 function SpinBottle({ rotation = 0, duration = 700, isSpinning = false }) {
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+      <div className="absolute top-[12%] h-10 w-10 rotate-45 rounded-[0.9rem] border border-white/10 bg-white/[0.1] shadow-[0_12px_30px_-18px_rgba(255,255,255,0.45)]" />
       <div
         className={[
           'bottle-stage-shell relative h-[8.25rem] w-[8.25rem] sm:h-[9.25rem] sm:w-[9.25rem] lg:h-[12rem] lg:w-[12rem] xl:h-[13.25rem] xl:w-[13.25rem]',

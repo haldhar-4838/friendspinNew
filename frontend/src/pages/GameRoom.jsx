@@ -259,10 +259,10 @@ function GameRoom() {
         modeLabel={modeLabel}
       />
 
-      <div className="grid gap-4 py-3 sm:py-5 lg:grid-cols-[minmax(0,1.06fr)_minmax(18rem,0.94fr)]">
+      <div className="grid gap-3 py-3">
         <div className="grid gap-4">
           <Card className="overflow-hidden">
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
@@ -278,7 +278,7 @@ function GameRoom() {
 
                 <div>
                   <p className="section-kicker">Current Turn</p>
-                  <h1 className="mt-2 font-display text-[2rem] font-bold tracking-[-0.05em] text-white sm:text-[2.35rem]">
+                  <h1 className="mt-2 font-display text-[1.85rem] font-bold tracking-[-0.05em] text-white">
                     {turnTitle}
                   </h1>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
@@ -287,11 +287,32 @@ function GameRoom() {
                 </div>
               </div>
 
-              <div className="surface-muted p-4 sm:p-5">
+              <div className="grid grid-cols-3 gap-2">
+                <div className="surface-muted p-4">
+                  <p className="section-kicker">Players</p>
+                  <p className="mt-2 font-display text-xl font-semibold text-white">
+                    {room.players.length}
+                  </p>
+                </div>
+                <div className="surface-muted p-4">
+                  <p className="section-kicker">Connection</p>
+                  <p className="mt-2 font-display text-lg font-semibold text-white capitalize">
+                    {connectionState}
+                  </p>
+                </div>
+                <div className="surface-muted p-4">
+                  <p className="section-kicker">Phase</p>
+                  <p className="mt-2 font-display text-lg font-semibold text-white capitalize">
+                    {gameState?.phase || 'waiting'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="surface-muted p-4">
                 <div className="flex items-start gap-3">
                   <div
                     className={[
-                      'flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.15rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-sm font-semibold text-white shadow-[0_0_24px_rgba(236,72,153,0.24)]',
+                      'flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.1rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-sm font-semibold text-white shadow-[0_0_24px_rgba(236,72,153,0.24)]',
                       selectedPlayer ? 'selected-player-glow' : '',
                     ].join(' ')}
                   >
@@ -299,7 +320,7 @@ function GameRoom() {
                   </div>
                   <div className="min-w-0">
                     <p className="section-kicker">Spotlight</p>
-                    <p className="mt-1 font-display text-2xl font-semibold text-white">
+                    <p className="mt-1 font-display text-[1.35rem] font-semibold text-white">
                       {selectedPlayer ? selectedPlayer.name : 'No player yet'}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-300">
@@ -311,39 +332,24 @@ function GameRoom() {
                 </div>
               </div>
 
-              <div className="surface-muted p-4 sm:p-5">
-                <div className="game-bottle-stage relative overflow-hidden rounded-[1.75rem] px-3 py-4 sm:px-4 sm:py-5">
+              <div className="surface-muted p-4">
+                <div className="game-bottle-stage relative overflow-hidden rounded-[1.45rem] px-3 py-4">
                   <div className="pointer-events-none absolute inset-x-12 top-8 h-20 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_72%)] blur-2xl" />
 
-                  <div className="lg:hidden">
-                    <div className="relative mx-auto flex min-h-[15rem] items-center justify-center">
-                      <SpinBottle
-                        rotation={gameState?.spinnerRotation || 0}
-                        duration={gameState?.spinDuration || 700}
-                        isSpinning={gameState?.phase === 'spinning'}
-                      />
-                    </div>
-
-                    <div className="mt-4">
-                      <PlayerCircle
-                        players={room.players}
-                        selectedPlayerId={selectedPlayer?.id}
-                        currentPlayerId={currentPlayer?.id}
-                        layout="chips"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="relative hidden min-h-[31rem] items-center justify-center lg:flex xl:min-h-[33rem]">
-                    <PlayerCircle
-                      players={room.players}
-                      selectedPlayerId={selectedPlayer?.id}
-                      currentPlayerId={currentPlayer?.id}
-                    />
+                  <div className="relative mx-auto flex min-h-[14rem] items-center justify-center">
                     <SpinBottle
                       rotation={gameState?.spinnerRotation || 0}
                       duration={gameState?.spinDuration || 700}
                       isSpinning={gameState?.phase === 'spinning'}
+                    />
+                  </div>
+
+                  <div className="mt-4">
+                    <PlayerCircle
+                      players={room.players}
+                      selectedPlayerId={selectedPlayer?.id}
+                      currentPlayerId={currentPlayer?.id}
+                      layout="chips"
                     />
                   </div>
                 </div>

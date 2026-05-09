@@ -18,8 +18,9 @@ function QuestionCard({
   const fallbackAvatar = selectedPlayerName?.slice(0, 1).toUpperCase() || 'P';
 
   return (
-    <div className="rounded-[1.8rem] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-5 shadow-party sm:p-6">
-      <div className="flex flex-wrap items-center gap-3">
+    <div className="relative overflow-hidden rounded-[1.65rem] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03))] p-4 shadow-party">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_70%)] blur-2xl" />
+      <div className="relative flex flex-wrap items-center gap-3">
         <span className="flex h-12 w-12 items-center justify-center rounded-[1.15rem] bg-gradient-to-br from-bubblegum/70 via-neon/70 to-aurora/70 text-sm font-semibold text-white">
           {selectedPlayerAvatar || fallbackAvatar}
         </span>
@@ -31,11 +32,11 @@ function QuestionCard({
           {modeLabel}
         </span>
       </div>
-      <p className="mt-5 font-display text-[1.5rem] font-semibold leading-8 text-white sm:text-2xl sm:leading-9">
+      <p className="relative mt-4 font-display text-[1.35rem] font-semibold leading-8 tracking-[-0.03em] text-white">
         {prompt}
       </p>
       {roundResult ? (
-        <p className="mt-4 text-sm text-slate-300">
+        <p className="mt-4 inline-flex rounded-full border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-slate-200">
           {roundResult.action === 'completed'
             ? `Round scored: +${roundResult.points} points`
             : `${roundResult.points} points applied for skip`}

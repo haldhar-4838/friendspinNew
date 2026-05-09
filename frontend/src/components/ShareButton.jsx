@@ -33,8 +33,25 @@ function ShareButton({ roomCode }) {
     <Button
       variant="secondary"
       onClick={handleShare}
-      className="min-h-[3.6rem] w-full justify-center"
+      className="min-h-[3.8rem] w-full justify-center gap-3"
     >
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 8L9 12L15 16"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="18" cy="6" r="3" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="6" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="18" cy="18" r="3" stroke="currentColor" strokeWidth="1.8" />
+      </svg>
       {label}
     </Button>
   );

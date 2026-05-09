@@ -1,9 +1,15 @@
 function Card({ title, subtitle, children, className = '' }) {
   return (
-    <section className={['glass-panel touch-card p-5 sm:p-7', className].join(' ')}>
+    <section
+      className={[
+        'glass-panel touch-card p-4 sm:p-5',
+        className,
+      ].join(' ')}
+    >
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       {title ? (
-        <div className="mb-5 sm:mb-6">
-          <h2 className="font-display text-[1.45rem] font-semibold tracking-[-0.03em] text-white sm:text-[1.7rem]">
+        <div className="mb-4 sm:mb-5">
+          <h2 className="font-display text-[1.35rem] font-semibold tracking-[-0.04em] text-white sm:text-[1.5rem]">
             {title}
           </h2>
           {subtitle ? (

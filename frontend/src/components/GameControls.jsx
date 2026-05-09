@@ -24,9 +24,9 @@ function GameControls({
   };
 
   return (
-    <div className="surface-muted space-y-4 p-4 sm:p-5">
+    <div className="surface-muted space-y-4 p-4">
       <div className="flex flex-col gap-3">
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="section-kicker">Round Controls</p>
           <p className="mt-2 text-sm leading-6 text-slate-300">
             {phaseCopy[phase] || phaseCopy.waiting}
@@ -44,11 +44,11 @@ function GameControls({
         </span>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3">
         <Button
           onClick={onSpin}
           disabled={!canSpin || isActionPending}
-          className="min-h-[4rem] w-full"
+          className="min-h-[3.9rem] w-full text-base"
         >
           Spin Bottle
         </Button>
@@ -56,7 +56,7 @@ function GameControls({
           variant="secondary"
           onClick={onNextRound}
           disabled={!canNextRound || isActionPending}
-          className="min-h-[4rem] w-full"
+          className="min-h-[3.9rem] w-full text-base"
         >
           Next Round
         </Button>

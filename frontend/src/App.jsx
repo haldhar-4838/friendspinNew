@@ -9,15 +9,16 @@ import Lobby from './pages/Lobby';
 function App() {
   return (
     <div className="min-h-screen bg-midnight text-white">
-      <div className="relative isolate flex min-h-screen flex-col overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.22),transparent_30%),radial-gradient(circle_at_left,rgba(236,72,153,0.18),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,0.18),transparent_24%),linear-gradient(180deg,#0b1530_0%,#040816_55%,#020617_100%)]">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_30%,transparent_70%,rgba(255,255,255,0.02))]" />
-        <div className="pointer-events-none absolute left-[-7rem] top-24 h-48 w-48 rounded-full bg-bubblegum/20 blur-3xl sm:h-64 sm:w-64" />
-        <div className="pointer-events-none absolute right-[-7rem] top-36 h-56 w-56 rounded-full bg-neon/20 blur-3xl sm:h-72 sm:w-72" />
-        <div className="pointer-events-none absolute bottom-0 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-aurora/10 blur-3xl sm:h-72 sm:w-72" />
+      <div className="relative isolate flex min-h-screen flex-col overflow-x-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.03),transparent_28%,transparent_72%,rgba(255,255,255,0.025))]" />
+        <div className="pointer-events-none absolute left-[-8rem] top-20 h-52 w-52 rounded-full bg-bubblegum/20 blur-3xl sm:h-72 sm:w-72" />
+        <div className="pointer-events-none absolute right-[-8rem] top-28 h-56 w-56 rounded-full bg-neon/20 blur-3xl sm:h-80 sm:w-80" />
+        <div className="pointer-events-none absolute bottom-[-4rem] left-1/2 h-52 w-52 -translate-x-1/2 rounded-full bg-aurora/10 blur-3xl sm:h-80 sm:w-80" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_65%)]" />
 
         <Navbar />
 
-        <main className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-10 pt-1 sm:px-6 sm:pt-2 lg:px-8">
+        <main className="relative z-10 mx-auto flex w-full max-w-[27.5rem] flex-1 flex-col px-4 pb-10 pt-1 sm:px-4">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-room" element={<CreateRoom />} />

@@ -59,12 +59,15 @@ function CreateRoom() {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 items-center py-4 sm:py-8">
+    <div className="w-full flex-1 py-4">
       <Card
         title="Create Room"
         subtitle="Pick your name and open a fresh FriendSpin lobby."
         className="w-full"
       >
+        <div className="mb-4 inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-300">
+          Host setup
+        </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             label="Your Name"

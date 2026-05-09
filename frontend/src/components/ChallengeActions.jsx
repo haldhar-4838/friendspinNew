@@ -15,7 +15,7 @@ function ChallengeActions({
       <Button
         onClick={onComplete}
         disabled={!canAct || isSubmitting}
-        className="min-h-[4.25rem] w-full flex-col"
+        className="min-h-[4.5rem] w-full flex-col rounded-[1.7rem]"
       >
         <span>Done</span>
         <span className="text-xs font-medium text-white/75">{completeLabel}</span>
@@ -24,7 +24,7 @@ function ChallengeActions({
         variant="secondary"
         onClick={onSkip}
         disabled={!canAct || isSubmitting}
-        className="min-h-[4.25rem] w-full flex-col"
+        className="min-h-[4.5rem] w-full flex-col rounded-[1.7rem]"
       >
         <span>Skip</span>
         <span className="text-xs font-medium text-slate-300">Lose 5 points</span>

@@ -102,12 +102,12 @@ function Lobby() {
   }
 
   return (
-    <div className="grid gap-4 py-3 sm:py-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
+    <div className="grid gap-3 py-3">
       <Card
         title="Lobby"
         subtitle="Invite everyone, keep an eye on the room, and start when ready."
       >
-        <div className="space-y-5">
+        <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
               {modeLabel}
@@ -122,9 +122,23 @@ function Lobby() {
             ) : null}
           </div>
 
+          <div className="surface-muted p-4">
+            <p className="section-kicker">Room Status</p>
+            <h3 className="mt-2 font-display text-[1.45rem] font-semibold tracking-[-0.04em] text-white">
+              {players.length < 2
+                ? 'Waiting for more players'
+                : 'Your room is ready to light up'}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              {currentPlayerInRoom?.isHost
+                ? 'Share the code, watch the lobby fill up, and start the game when the energy feels right.'
+                : 'You are in. Hang here while the host gets everyone together.'}
+            </p>
+          </div>
+
           <RoomCodeBox roomCode={room.code} />
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3">
             <ShareButton roomCode={room.code} />
             <WhatsAppShareButton roomCode={room.code} />
           </div>

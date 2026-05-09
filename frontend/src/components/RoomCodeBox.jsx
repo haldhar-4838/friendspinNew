@@ -14,12 +14,16 @@ function RoomCodeBox({ roomCode }) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-[1.9rem] border border-white/10 bg-[linear-gradient(135deg,rgba(139,92,246,0.16),rgba(236,72,153,0.12),rgba(34,211,238,0.12))] px-5 py-5 shadow-[0_24px_55px_-35px_rgba(139,92,246,0.72)]">
+    <div className="relative overflow-hidden rounded-[1.65rem] border border-white/10 bg-[linear-gradient(135deg,rgba(139,92,246,0.22),rgba(236,72,153,0.18),rgba(34,211,238,0.12))] px-4 py-4 shadow-[0_28px_68px_-32px_rgba(139,92,246,0.78)]">
       <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18),transparent_72%)]" />
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      <div className="flex flex-col gap-4">
         <div className="min-w-0">
-          <p className="section-kicker">Room Code</p>
-          <p className="mt-2 break-all font-display text-[2rem] font-bold tracking-[0.22em] text-white sm:text-[2.5rem]">
+          <div className="status-pill border-white/15 bg-white/10 text-slate-100">
+            Private Invite
+          </div>
+          <p className="mt-3 section-kicker">Room Code</p>
+          <p className="mt-2 break-all font-display text-[1.75rem] font-bold tracking-[0.22em] text-white">
             {roomCode}
           </p>
           <p className="mt-2 text-sm text-slate-300">
@@ -29,7 +33,7 @@ function RoomCodeBox({ roomCode }) {
         <button
           type="button"
           onClick={handleCopy}
-          className="touch-button inline-flex min-h-[3.1rem] shrink-0 items-center justify-center rounded-[1.25rem] border border-white/15 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-white hover:bg-white/[0.12]"
+          className="touch-button inline-flex min-h-[3.2rem] w-full items-center justify-center rounded-[1.2rem] border border-white/15 bg-white/[0.1] px-4 py-2 text-sm font-semibold text-white backdrop-blur-xl hover:bg-white/[0.14]"
         >
           {isCopied ? 'Copied' : 'Copy Code'}
         </button>

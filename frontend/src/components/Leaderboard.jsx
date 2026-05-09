@@ -13,7 +13,8 @@ function Leaderboard({ players = [], compact = false }) {
         <div
           key={player.id}
           className={[
-            'glass-outline flex items-start justify-between gap-3 rounded-[1.6rem]',
+            'glass-outline flex items-start justify-between gap-3 rounded-[1.7rem]',
+            index === 0 ? 'border-bubblegum/20 bg-bubblegum/[0.08]' : '',
             compact ? 'px-3.5 py-3' : 'px-4 py-4',
           ].join(' ')}
         >
@@ -33,7 +34,7 @@ function Leaderboard({ players = [], compact = false }) {
                   compact ? 'text-sm' : '',
                 ].join(' ')}
               >
-                {index + 1}. {player.name}
+                {index === 0 ? 'Winner' : `#${index + 1}`} {player.name}
               </p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.25em] text-slate-400">
                 {player.isHost ? 'Host' : 'Player'}

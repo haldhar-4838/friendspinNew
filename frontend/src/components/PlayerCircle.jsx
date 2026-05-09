@@ -14,8 +14,8 @@ function PlayerCircle({
         className={[
           'glass-outline text-center transition duration-300',
           compact
-            ? 'flex min-h-[3.6rem] min-w-0 items-center gap-3 rounded-[1.35rem] px-3 py-2.5 text-left'
-            : 'rounded-[1.5rem] px-2.5 py-3 shadow-glass',
+            ? 'flex min-h-[3.7rem] min-w-0 items-center gap-3 rounded-[1.45rem] px-3 py-2.5 text-left'
+            : 'rounded-[1.6rem] px-2.5 py-3 shadow-glass',
           isSelected
             ? 'selected-player-glow border-bubblegum/60 bg-bubblegum/[0.12]'
             : isCurrentPlayer
@@ -97,6 +97,7 @@ function PlayerCircle({
       <div className="absolute inset-[11%] rounded-full border border-white/10 bg-[radial-gradient(circle,rgba(255,255,255,0.06),transparent_72%)] shadow-[0_0_60px_rgba(139,92,246,0.18)]" />
       <div className="absolute inset-[22%] rounded-full border border-dashed border-white/10" />
       <div className="absolute inset-[31%] rounded-full border border-white/10 bg-slate-950/55 shadow-[0_30px_80px_-38px_rgba(2,6,23,1)]" />
+      <div className="absolute inset-[36%] rounded-full border border-white/6 bg-[radial-gradient(circle,rgba(255,255,255,0.06),rgba(7,13,33,0.9)_75%)]" />
 
       {players.map((player, index) => {
         const angle = (Math.PI * 2 * index) / players.length;

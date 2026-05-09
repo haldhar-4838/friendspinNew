@@ -77,12 +77,15 @@ function JoinRoom() {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 items-center py-4 sm:py-8">
+    <div className="w-full flex-1 py-4">
       <Card
         title="Join Room"
         subtitle="Enter your name and room code to jump straight into the lobby."
         className="w-full"
       >
+        <div className="mb-4 inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-300">
+          Join the party
+        </div>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             label="Your Name"

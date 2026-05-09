@@ -18,8 +18,9 @@ function ChoiceModal({
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-md">
       <div className="glass-panel w-full max-w-lg p-5 sm:p-8">
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-20 bg-[radial-gradient(circle,rgba(255,255,255,0.16),transparent_72%)] blur-3xl" />
         <p className="section-kicker">Selected Player</p>
-        <div className="mt-3 flex items-center gap-4">
+        <div className="relative mt-3 flex items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-2xl font-bold text-white shadow-party">
             {selectedPlayer.avatar || fallbackAvatar}
           </div>
@@ -37,7 +38,7 @@ function ChoiceModal({
             ? 'It is your turn. Pick Truth or Dare and the room will see your challenge instantly.'
             : `${selectedPlayer.name} is choosing between Truth and Dare right now.`}
         </p>
-        <div className="mt-4 rounded-[1.4rem] border border-white/10 bg-white/[0.05] px-4 py-3 text-center">
+        <div className="mt-4 rounded-[1.55rem] border border-white/10 bg-white/[0.05] px-4 py-3 text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
             Auto-picks in
           </p>
