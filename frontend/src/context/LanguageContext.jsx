@@ -6,6 +6,7 @@ import {
 } from '../lib/translations';
 
 const LanguageContext = createContext(null);
+const LANGUAGE_SESSION_KEY = 'truthdare-language-session-selected';
 
 function readStoredLanguage() {
   if (typeof window === 'undefined') {
@@ -19,8 +20,23 @@ function readStoredLanguage() {
   }
 }
 
+function hasSessionLanguageSelection() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  try {
+    return window.sessionStorage.getItem(LANGUAGE_SESSION_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
 export function LanguageProvider({ children }) {
   const [language, setLanguageState] = useState(() => readStoredLanguage());
+  const [hasSelectedLanguage, setHasSelectedLanguage] = useState(() =>
+    hasSessionLanguageSelection(),
+  );
 
   useEffect(() => {
     if (typeof document === 'undefined') {
@@ -33,23 +49,25 @@ export function LanguageProvider({ children }) {
 
   const setLanguage = (nextLanguage) => {
     setLanguageState(nextLanguage);
+    setHasSelectedLanguage(true);
 
     if (typeof window === 'undefined') {
       return;
     }
 
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
+    window.sessionStorage.setItem(LANGUAGE_SESSION_KEY, 'true');
   };
 
   const value = useMemo(
     () => ({
       language: language || 'en',
-      hasSelectedLanguage: Boolean(language),
+      hasSelectedLanguage,
       setLanguage,
       languageOptions,
       t: (key, params) => getTranslation(language || 'en', key, params),
     }),
-    [language],
+    [hasSelectedLanguage, language],
   );
 
   return (
