@@ -24,7 +24,7 @@ function App() {
 
         <Navbar />
 
-        <main className="relative z-10 mx-auto flex w-full max-w-[27.5rem] flex-1 flex-col px-4 pb-10 pt-1 sm:px-4">
+        <main className="relative z-10 mx-auto flex w-full max-w-[26.5rem] flex-1 flex-col px-3 pb-8 pt-1 sm:max-w-[27.5rem] sm:px-4 sm:pb-10">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-room" element={<CreateRoom />} />
