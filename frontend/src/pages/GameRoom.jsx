@@ -15,6 +15,21 @@ import { useRoom } from '../context/RoomContext';
 import { gameModes } from '../data/gameModes';
 import { playRevealSound, playSpinSound } from '../lib/gameAudio';
 
+function HeartAccent() {
+  return (
+    <span className="inline-flex h-6 w-6 translate-y-1 items-center justify-center text-[#ff4f89]">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M12 21.35 10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08A5.96 5.96 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35Z" />
+      </svg>
+    </span>
+  );
+}
+
 function GameRoom() {
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -280,48 +295,50 @@ function GameRoom() {
 
       <div className="grid gap-3 py-3">
         <div className="grid gap-4">
-          <Card className="overflow-hidden">
+          <Card className="truthdare-main-play-shell overflow-hidden">
             <div className="space-y-4">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="status-pill border-white/10 bg-white/[0.05] text-slate-300">
+                  <span className="truthdare-chip truthdare-chip-room">
                     {t('common.room')} {room.code}
                   </span>
-                  <span className="status-pill border-bubblegum/25 bg-bubblegum/10 text-bubblegum">
+                  <span className="truthdare-chip truthdare-chip-round">
                     {t('common.round')} {roundNumber}
                   </span>
-                  <span className="status-pill border-neon/25 bg-neon/10 text-violet-200">
+                  <span className="truthdare-chip truthdare-chip-mode">
                     {modeLabel}
                   </span>
                 </div>
 
                 <div>
-                  <p className="section-kicker">{t('common.currentTurn')}</p>
-                  <h1 className="mt-2 font-display text-[1.85rem] font-bold tracking-[-0.05em] text-white">
-                    {turnTitle}
+                  <p className="truthdare-section-label">{t('common.currentTurn')}</p>
+                  <h1 className="mt-3 flex items-center gap-2 font-display text-[2.4rem] font-bold tracking-[-0.07em] text-white">
+                    <span>{turnTitle}</span>
+                    {selectedPlayer ? <HeartAccent /> : null}
                   </h1>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
+                  <p className="mt-3 max-w-[18rem] text-[1rem] leading-8 text-slate-300">
                     {turnSummary}
                   </p>
                 </div>
               </div>
 
-              <div className="surface-muted truthdare-spotlight p-4">
-                <div className="flex items-start gap-3">
+              <div className="truthdare-spotlight p-5">
+                <div className="truthdare-spotlight-hearts" />
+                <div className="relative flex items-start gap-4">
                   <div
                     className={[
-                      'flex h-12 w-12 shrink-0 items-center justify-center rounded-[1.1rem] bg-gradient-to-br from-bubblegum/80 via-neon/80 to-aurora/80 text-sm font-semibold text-white shadow-[0_0_24px_rgba(236,72,153,0.24)]',
+                      'flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center rounded-[1.45rem] bg-gradient-to-br from-[#8b5cf6] via-[#a855f7] to-[#ec4899] text-xl font-semibold text-white shadow-[0_0_34px_rgba(217,70,239,0.28)]',
                       selectedPlayer ? 'selected-player-glow' : '',
                     ].join(' ')}
                   >
                     {spotlightPlayer?.avatar || spotlightFallback}
                   </div>
                   <div className="min-w-0">
-                    <p className="section-kicker">{t('game.spotlight')}</p>
-                    <p className="mt-1 font-display text-[1.35rem] font-semibold text-white">
+                    <p className="truthdare-section-label">{t('game.spotlight')}</p>
+                    <p className="mt-2 font-display text-[2rem] font-semibold tracking-[-0.05em] text-white">
                       {selectedPlayer ? selectedPlayer.name : t('game.noPlayerYet')}
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">
+                    <p className="mt-3 max-w-[15rem] text-[1rem] leading-8 text-slate-300">
                       {selectedPlayer
                         ? t('game.spotlightSelected', { name: selectedPlayer.name })
                         : t('game.spotlightEmpty')}
@@ -330,11 +347,11 @@ function GameRoom() {
                 </div>
               </div>
 
-              <div className="surface-muted truthdare-wheel-shell p-4">
-                <div className="game-bottle-stage relative overflow-hidden rounded-[1.45rem] px-3 py-4">
+              <div className="truthdare-wheel-shell p-4">
+                <div className="game-bottle-stage relative overflow-hidden rounded-[1.7rem] border border-white/10 px-3 py-6">
                   <div className="pointer-events-none absolute inset-x-12 top-8 h-20 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.08),transparent_72%)] blur-2xl" />
 
-                  <div className="relative mx-auto flex min-h-[14rem] items-center justify-center">
+                  <div className="relative mx-auto flex min-h-[18rem] items-center justify-center">
                     <SpinBottle
                       rotation={gameState?.spinnerRotation || 0}
                       duration={gameState?.spinDuration || 700}
@@ -350,6 +367,11 @@ function GameRoom() {
                       layout="chips"
                     />
                   </div>
+
+                  <p className="pb-2 pt-5 text-center text-[1rem] uppercase tracking-[0.38em] text-slate-400">
+                    {t('game.spinToPlay')}
+                    <span className="ml-2 inline-block align-middle text-[#ff4f89]">♡</span>
+                  </p>
                 </div>
               </div>
 

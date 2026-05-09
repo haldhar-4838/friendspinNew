@@ -124,6 +124,61 @@
     @apply inline-flex items-center justify-center rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em];
   }
 
+  .truthdare-brand {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .truthdare-brand-heart {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[1.25rem] border border-[#ff5d8f]/25 text-white backdrop-blur-xl;
+    background:
+      radial-gradient(circle at center, rgba(255, 105, 154, 0.24), transparent 66%),
+      linear-gradient(180deg, rgba(43, 18, 47, 0.96), rgba(18, 11, 31, 0.92));
+    box-shadow:
+      0 0 0 1px rgba(255, 93, 143, 0.08),
+      0 18px 40px -24px rgba(255, 83, 136, 0.72),
+      0 0 30px rgba(255, 76, 129, 0.12);
+  }
+
+  .truthdare-section-label {
+    color: rgba(156, 163, 175, 0.92);
+    font-size: 0.82rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .truthdare-chip {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    backdrop-filter: blur(18px);
+  }
+
+  .truthdare-chip-room {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(229, 231, 235, 0.96);
+  }
+
+  .truthdare-chip-round {
+    border: 1px solid rgba(255, 77, 129, 0.46);
+    background: rgba(255, 77, 129, 0.08);
+    color: #ff5a95;
+  }
+
+  .truthdare-chip-mode {
+    border: 1px solid rgba(168, 85, 247, 0.34);
+    background: rgba(124, 58, 237, 0.08);
+    color: #d6a7ff;
+  }
+
   .section-kicker {
     @apply text-[11px] uppercase tracking-[0.32em] text-slate-400;
   }
@@ -311,15 +366,144 @@
 }
 
 .truthdare-spotlight {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 77, 129, 0.34);
   background:
-    radial-gradient(circle at top right, rgba(244, 63, 94, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(26, 13, 35, 0.76), rgba(15, 9, 25, 0.58));
+    radial-gradient(circle at top right, rgba(255, 77, 129, 0.22), transparent 24%),
+    linear-gradient(180deg, rgba(39, 17, 35, 0.92), rgba(28, 12, 35, 0.74));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 28px 72px -34px rgba(255, 77, 129, 0.28);
+}
+
+.truthdare-spotlight-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background:
+    radial-gradient(circle at 84% 28%, rgba(255, 77, 129, 0.76), transparent 8%),
+    radial-gradient(circle at 72% 68%, rgba(255, 77, 129, 0.52), transparent 8%),
+    radial-gradient(circle at 18% 72%, rgba(255, 77, 129, 0.46), transparent 8%);
 }
 
 .truthdare-wheel-shell {
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background:
     radial-gradient(circle at top, rgba(217, 70, 239, 0.12), transparent 30%),
-    linear-gradient(180deg, rgba(17, 11, 30, 0.72), rgba(9, 7, 20, 0.58));
+    linear-gradient(180deg, rgba(17, 11, 30, 0.9), rgba(9, 7, 20, 0.78));
+}
+
+.truthdare-main-play-shell {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 24%),
+    linear-gradient(180deg, rgba(14, 10, 27, 0.94), rgba(7, 5, 20, 0.84));
+}
+
+.truthdare-bottle-shell {
+  box-shadow:
+    0 0 0 1px rgba(255, 93, 143, 0.08),
+    0 28px 82px -34px rgba(212, 69, 125, 0.44);
+}
+
+.language-gate-screen {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 26%),
+    linear-gradient(180deg, rgba(11, 8, 24, 0.94), rgba(6, 4, 16, 0.98));
+  box-shadow:
+    0 36px 120px -56px rgba(0, 0, 0, 0.98),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.language-gate-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.language-gate-glow-1 {
+  left: 6%;
+  top: 10%;
+  height: 10rem;
+  width: 10rem;
+  background: rgba(255, 70, 126, 0.16);
+}
+
+.language-gate-glow-2 {
+  right: 7%;
+  top: 34%;
+  height: 8rem;
+  width: 8rem;
+  background: rgba(168, 85, 247, 0.14);
+}
+
+.language-gate-glow-3 {
+  bottom: 8%;
+  left: 24%;
+  height: 8rem;
+  width: 8rem;
+  background: rgba(255, 70, 126, 0.14);
+}
+
+.language-option-card {
+  display: flex;
+  min-height: 6.5rem;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1.55rem;
+  padding: 1.1rem 1.2rem;
+  text-align: left;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.language-option-card:hover {
+  transform: translateY(-1px);
+}
+
+.language-option-card-primary {
+  border: 1px solid rgba(198, 91, 255, 0.68);
+  background: linear-gradient(180deg, rgba(18, 12, 36, 0.92), rgba(11, 8, 24, 0.82));
+  box-shadow:
+    0 0 0 1px rgba(198, 91, 255, 0.08),
+    0 24px 48px -32px rgba(168, 85, 247, 0.66);
+}
+
+.language-option-card-secondary {
+  border: 1px solid rgba(255, 77, 129, 0.64);
+  background: linear-gradient(180deg, rgba(25, 11, 28, 0.92), rgba(14, 7, 21, 0.82));
+  box-shadow:
+    0 0 0 1px rgba(255, 77, 129, 0.08),
+    0 24px 48px -32px rgba(255, 77, 129, 0.58);
+}
+
+.language-option-icon {
+  display: inline-flex;
+  height: 3.5rem;
+  width: 3.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.language-option-chevron {
+  flex-shrink: 0;
+  font-size: 2rem;
+  line-height: 1;
+  color: rgba(226, 232, 240, 0.68);
 }
 
 .home-device-shell {
