@@ -11,12 +11,16 @@ const linkStyles = ({ isActive }) =>
   ].join(' ');
 
 function Navbar() {
-  const { t } = useLanguage();
+  const { openLanguageGate, t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-30 px-4 pt-3">
       <div className="mx-auto flex max-w-[27.5rem] items-center justify-between gap-3">
-        <Link to="/" className="truthdare-brand flex min-w-0 items-center gap-3">
+        <Link
+          to="/"
+          onClick={openLanguageGate}
+          className="truthdare-brand flex min-w-0 items-center gap-3"
+        >
           <span className="truthdare-brand-heart">
             <svg
               viewBox="0 0 40 40"

@@ -59,10 +59,21 @@ export function LanguageProvider({ children }) {
     window.sessionStorage.setItem(LANGUAGE_SESSION_KEY, 'true');
   };
 
+  const openLanguageGate = () => {
+    setHasSelectedLanguage(false);
+
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.sessionStorage.removeItem(LANGUAGE_SESSION_KEY);
+  };
+
   const value = useMemo(
     () => ({
       language: language || 'en',
       hasSelectedLanguage,
+      openLanguageGate,
       setLanguage,
       languageOptions,
       t: (key, params) => getTranslation(language || 'en', key, params),
